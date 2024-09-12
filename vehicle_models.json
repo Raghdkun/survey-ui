@@ -1,0 +1,31 @@
+{
+    "vehicle_models": [
+      { "name": "3500" },
+      { "name": "4500" },
+      { "name": "4500HD" },
+      { "name": "4500XD" },
+      { "name": "5500HD" },
+      { "name": "5500hg" },
+      { "name": "5500XD" },
+      { "name": "5500xg" },
+      { "name": "6500xd" },
+      { "name": "Blazer" },
+      { "name": "Camaro" },
+      { "name": "Colorado" },
+      { "name": "Corvette" },
+      { "name": "Equinox" },
+      { "name": "Express G2500" },
+      { "name": "Express G3500" },
+      { "name": "Express G4500" },
+      { "name": "Malibu" },
+      { "name": "Silverado" },
+      { "name": "Silverado Medium Duty" },
+      { "name": "Suburban" },
+      { "name": "Tahoe" },
+      { "name": "Trailblazer" },
+      { "name": "Traverse" },
+      { "name": "Traverse Limited" },
+      { "name": "Trax" }
+    ]
+  }
+  

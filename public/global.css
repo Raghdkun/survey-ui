@@ -1,0 +1,228 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+/* Header Section */
+header {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo img {
+    height: 40px;
+}
+
+header .contact-info {
+    display: flex;
+    align-items: center;
+    color: gray;
+}
+
+header .contact-info i {
+    color: black;
+    margin-right: 8px;
+}
+
+header .contact-info span {
+    font-size: 18px;
+}
+
+header .contact-info strong {
+    color: black;
+}
+
+/* Hero Section */
+.hero {
+    background-color: #f7f7f7;
+    padding: 40px 0;
+    text-align: center;
+}
+
+.hero .container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    line-height: 1.4;
+    max-width: 700px;
+    margin: 0;
+}
+
+.car img {
+    height: 70px;
+    width: auto;
+    margin-bottom: 20px;
+}
+
+/* Navigation Tabs */
+nav {
+    background-color: white;
+    border-top: 1px solid #eee;
+}
+
+nav .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+nav a {
+    margin: 0 20px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+}
+
+nav a.active {
+    color: #ff007f;
+    border-bottom: 2px solid #ff007f;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #000;
+}
+
+/* Form Section */
+.form-section {
+    background-color: white;
+    padding: 40px 0;
+    text-align: center;
+}
+
+.form-section .container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Form Headings */
+.form-section h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Custom Dropdown Styling */
+.custom-dropdown {
+    position: relative;
+    width: 60%;
+    margin: 0 auto;
+    border: 2px solid #ff007f;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+.custom-dropdown-selected {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.custom-dropdown-options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none; /* Hidden by default */
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    border: 2px solid #ff007f;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.custom-dropdown-options li {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.custom-dropdown-options li:hover {
+    background-color: #f0f0f0;
+}
+
+/* Car Logo inside the custom dropdown */
+.custom-dropdown-options li img {
+    height: 20px;
+    width: auto;
+    margin-right: 10px; /* Space between logo and name */
+}
+
+/* Show the dropdown when open */
+.custom-dropdown.open .custom-dropdown-options {
+    display: block;
+}
+
+/* Step-by-Step Animation */
+.survey-question {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    margin-bottom: 20px;
+}
+
+.survey-question.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Button Styles */
+button {
+    background-color: #ff007f;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e6006e;
+}
+
+/* Align car logo in form if necessary */
+#car-logo {
+    margin-top: 10px;
+    height: 50px;
+    /* width: 50px; */
+    display: none; /* Hidden until a car make is selected */
+}
+
+/* Logo container under dropdown */
+.form-section .logo-container {
+    text-align: center;
+    margin-top: 20px;
+}

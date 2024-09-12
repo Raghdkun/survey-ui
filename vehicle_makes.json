@@ -1,0 +1,169 @@
+{
+    "vehicle_makes": [
+      {
+        "name": "Buick",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/buick.svg"
+      },
+      {
+        "name": "Chevrolet",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/chevrolet.svg"
+      },
+      {
+        "name": "Chrysler",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/chrysler.svg"
+      },
+      {
+        "name": "Dodge",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/dodge.svg"
+      },
+      {
+        "name": "Ford",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/ford.svg"
+      },
+      {
+        "name": "GMC",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/gmc.svg"
+      },
+      {
+        "name": "Honda",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/honda.svg"
+      },
+      {
+        "name": "Hyundai",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/hyundai.svg"
+      },
+      {
+        "name": "Jeep",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/jeep.svg"
+      },
+      {
+        "name": "Nissan",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/nissan.svg"
+      },
+      {
+        "name": "Toyota",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/toyota.svg"
+      },
+      {
+        "name": "Acura",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/acura.svg"
+      },
+      {
+        "name": "Alfa Romeo",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/alfa-romeo.svg"
+      },
+      {
+        "name": "Audi",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/audi.svg"
+      },
+      {
+        "name": "Bentley",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/bentley.svg"
+      },
+      {
+        "name": "BMW",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/bmw.svg"
+      },
+      {
+        "name": "Cadillac",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/cadillac.svg"
+      },
+      {
+        "name": "Ferrari",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/ferrari.svg"
+      },
+      {
+        "name": "Infiniti",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/infiniti.svg"
+      },
+      {
+        "name": "Isuzu",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/isuzu.svg"
+      },
+      {
+        "name": "Jaguar",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/jaguar.svg"
+      },
+      {
+        "name": "Lamborghini",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/lamborghini.svg"
+      },
+      {
+        "name": "Land Rover",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/land-rover.svg"
+      },
+      {
+        "name": "Lexus",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/lexus.svg"
+      },
+      {
+        "name": "Lincoln",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/lincoln.svg"
+      },
+      {
+        "name": "Lotus",
+        "logo": "https://smartfinancial.com/quote/images/default-car.png"
+      },
+      {
+        "name": "Maserati",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/maserati.svg"
+      },
+      {
+        "name": "Mazda",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/mazda.svg"
+      },
+      {
+        "name": "Mercedes-Benz",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/mercedes-benz.svg"
+      },
+      {
+        "name": "Mercury",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/mercury.svg"
+      },
+      {
+        "name": "Mitsubishi",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/mitsubishi.svg"
+      },
+      {
+        "name": "Oldsmobile",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/oldsmobile.svg"
+      },
+      {
+        "name": "Pontiac",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/pontiac.svg"
+      },
+      {
+        "name": "Porsche",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/porsche.svg"
+      },
+      {
+        "name": "Rolls-Royce",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/rolls-royce.svg"
+      },
+      {
+        "name": "Saab",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/saab.svg"
+      },
+      {
+        "name": "Subaru",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/subaru.svg"
+      },
+      {
+        "name": "Suzuki",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/suzuki.svg"
+      },
+      {
+        "name": "Volkswagen",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/volkswagen.svg"
+      },
+      {
+        "name": "Volvo",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/volvo.svg"
+      },
+      {
+        "name": "Yamaha",
+        "logo": "https://d1knh3b6uo8q16.cloudfront.net/car_logos/yamaha.svg"
+      }
+    ]
+  }
+  

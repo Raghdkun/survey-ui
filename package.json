@@ -1,0 +1,15 @@
+{
+  "name": "landing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "tailwindcss build -i ./src/inputs.css -o public/outputs.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "tailwindcss": "^3.4.10"
+  }
+}
