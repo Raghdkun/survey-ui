@@ -255,28 +255,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Yes/No to add a second vehicle -->
-        <div id="add-second-vehicle" class="form-step">
-            <div class="form-group">
-                <h2 class="question-title">
-                    Want to add a second vehicle?
-                </h2>
-                <p>You can save up to 25% by having multiple vehicles on the same policy.</p>
-                <div class="question-options">
-                    <label class="radio-button">
-                        <input type="radio" name="add-vehicle" value="Yes">
-                        <span></span>
-                        <span class="radio-label">Yes</span>
-                    </label>
-                    <label class="radio-button">
-                        <input type="radio" name="add-vehicle" value="No">
-                        <span></span>
-                        <span class="radio-label">No</span>
-                    </label>
-                </div>
-            </div>
-        </div>
     </form>
 
     <!-- Dynamic Questions Section -->
@@ -284,134 +262,258 @@
         <div id="questions-container"></div>
     </form>
 
+    
+
     <!-- Next Step Button -->
     <button id="next-step-button" class="next-step-button">Next Step</button>
 </div>
-
 <script>
-    // Dynamically populate year dropdown for the vehicle
-    const currentYear = new Date().getFullYear();
-    const yearDropdown = document.getElementById('vehicle-year');
-    for (let year = currentYear; year >= 1986; year--) {
-        const option = document.createElement('option');
-        option.value = year;
-        option.textContent = year;
-        yearDropdown.appendChild(option);
-    }
+// Dynamically populate year dropdown for the vehicle
+const currentYear = new Date().getFullYear();
+const yearDropdown = document.getElementById('vehicle-year');
+for (let year = currentYear; year >= 1986; year--) {
+    const option = document.createElement('option');
+    option.value = year;
+    option.textContent = year;
+    yearDropdown.appendChild(option);
+}
 
-    // Fetch car data from JSON
-    fetch('car-data.json')
-        .then(response => response.json())
-        .then(carData => {
-            const makeDropdown = document.getElementById('vehicle-make');
-            const modelDropdown = document.getElementById('vehicle-model');
-            const mainDoneIcon = document.getElementById('main-done-icon');
-            const step2 = document.getElementById('step-2');
-            const step3 = document.getElementById('step-3');
-            const addSecondVehicleStep = document.getElementById('add-second-vehicle');
-            const nextStepButton = document.getElementById('next-step-button');
+// Fetch car data from JSON
+fetch('car-data.json')
+    .then(response => response.json())
+    .then(carData => {
+        const makeDropdown = document.getElementById('vehicle-make');
+        const modelDropdown = document.getElementById('vehicle-model');
+        const mainDoneIcon = document.getElementById('main-done-icon');
+        const step2 = document.getElementById('step-2');
+        const step3 = document.getElementById('step-3');
+        const nextStepButton = document.getElementById('next-step-button');
 
-            // Populate the make dropdown
-            for (const make in carData) {
-                const option = document.createElement('option');
-                option.value = make;
-                option.textContent = make;
-                makeDropdown.appendChild(option);
+        // Populate the make dropdown
+        for (const make in carData) {
+            const option = document.createElement('option');
+            option.value = make;
+            option.textContent = make;
+            makeDropdown.appendChild(option);
+        }
+
+        // Show fade-in effect for next question and show done icon
+        yearDropdown.addEventListener('change', () => {
+            if (yearDropdown.value) step2.classList.add('active');
+        });
+
+        makeDropdown.addEventListener('change', () => {
+            if (makeDropdown.value) {
+                step3.classList.add('active');
+                modelDropdown.innerHTML = '<option value="">Select Vehicle Model</option>';
+                const selectedMake = makeDropdown.value;
+                carData[selectedMake].models.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model;
+                    option.textContent = model;
+                    modelDropdown.appendChild(option);
+                });
             }
+        });
 
-            // Show fade-in effect for next question and show done icon
-            yearDropdown.addEventListener('change', () => {
-                if (yearDropdown.value) step2.classList.add('active');
-            });
+        modelDropdown.addEventListener('change', () => {
+            if (modelDropdown.value) {
+                mainDoneIcon.style.display = 'inline-block';
+                showFirstQuestion(); // Load and show the dynamic questions
+            }
+        });
+    })
+    .catch(error => console.error('Error fetching car data:', error));
 
-            makeDropdown.addEventListener('change', () => {
-                if (makeDropdown.value) {
-                    step3.classList.add('active');
-                    modelDropdown.innerHTML = '<option value="">Select Vehicle Model</option>';
-                    const selectedMake = makeDropdown.value;
-                    carData[selectedMake].models.forEach(model => {
-                        const option = document.createElement('option');
-                        option.value = model;
-                        option.textContent = model;
-                        modelDropdown.appendChild(option);
+// Load dynamic questions after selecting vehicle
+function showFirstQuestion() {
+    fetch('stage-one-questions.json')
+        .then(response => response.json())
+        .then(data => {
+            const questionsContainer = document.getElementById('questions-container');
+            questionsContainer.innerHTML = ''; // Clear any previous questions
+            const nextStepButton = document.getElementById('next-step-button'); // Get the button
+
+            // Iterate through each question in the JSON
+            data.questions.forEach((question, index) => {
+                const questionWrapper = document.createElement('div');
+                questionWrapper.classList.add('question-step');
+                questionWrapper.setAttribute('data-step', index);
+
+                const questionTitle = document.createElement('h2');
+                questionTitle.classList.add('question-title');
+                questionTitle.innerHTML = `<div class="done-icon" style="display: none;"></div> ${question.question}`;
+
+                const optionsContainer = document.createElement('div');
+                optionsContainer.classList.add('question-options');
+
+                question.choices.forEach(choice => {
+                    const optionWrapper = document.createElement('label');
+                    optionWrapper.classList.add('radio-button');
+
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `question_${question.id}`;
+                    input.value = choice;
+
+                    const radioCircle = document.createElement('span');
+                    optionWrapper.appendChild(input);
+                    optionWrapper.appendChild(radioCircle);
+
+                    const label = document.createElement('span');
+                    label.classList.add('radio-label');
+                    label.textContent = choice;
+                    optionWrapper.appendChild(label);
+
+                    optionsContainer.appendChild(optionWrapper);
+
+                    // Event listener to show the next question
+                    input.addEventListener('change', () => {
+                        const radioButtons = document.querySelectorAll(`input[name="question_${question.id}"]`);
+                        radioButtons.forEach(rb => rb.parentElement.classList.remove('selected'));
+                        optionWrapper.classList.add('selected');
+                        const nextStep = index + 1;
+                        if (nextStep < data.questions.length) {
+                            document.querySelector(`[data-step="${nextStep}"]`).classList.add('active');
+                        }
+                        questionTitle.querySelector('.done-icon').style.display = 'inline-block';
+
+                        // Check if the current question is "Want to add a second vehicle?"
+                        if (question.question.toLowerCase().includes('want to add a second vehicle')) {
+                            handleSecondVehicleChoice(input.value, data.questions.slice(5)); // Pass the second vehicle questions
+                        }
                     });
-                }
-            });
-
-            modelDropdown.addEventListener('change', () => {
-                if (modelDropdown.value) {
-                    mainDoneIcon.style.display = 'inline-block';
-                    addSecondVehicleStep.classList.add('active');
-                    showFirstQuestion(); // Load and show the dynamic questions
-                }
-            });
-        })
-        .catch(error => console.error('Error fetching car data:', error));
-
-    // Load dynamic questions after selecting vehicle
-    function showFirstQuestion() {
-        fetch('stage-one-questions.json')
-            .then(response => response.json())
-            .then(data => {
-                const questionsContainer = document.getElementById('questions-container');
-                questionsContainer.innerHTML = ''; // Clear any previous questions
-
-                // Iterate through each question in the JSON
-                data.questions.forEach((question, index) => {
-                    const questionWrapper = document.createElement('div');
-                    questionWrapper.classList.add('question-step');
-                    questionWrapper.setAttribute('data-step', index);
-
-                    const questionTitle = document.createElement('h2');
-                    questionTitle.classList.add('question-title');
-                    questionTitle.innerHTML = `<div class="done-icon" style="display: none;"></div> ${question.question}`;
-
-                    const optionsContainer = document.createElement('div');
-                    optionsContainer.classList.add('question-options');
-
-                    question.choices.forEach(choice => {
-                        const optionWrapper = document.createElement('label');
-                        optionWrapper.classList.add('radio-button');
-
-                        const input = document.createElement('input');
-                        input.type = 'radio';
-                        input.name = `question_${question.id}`;
-                        input.value = choice;
-
-                        const radioCircle = document.createElement('span');
-                        optionWrapper.appendChild(input);
-                        optionWrapper.appendChild(radioCircle);
-
-                        const label = document.createElement('span');
-                        label.classList.add('radio-label');
-                        label.textContent = choice;
-                        optionWrapper.appendChild(label);
-
-                        optionsContainer.appendChild(optionWrapper);
-
-                        // Event listener to show the next question
-                        input.addEventListener('change', () => {
-                            const radioButtons = document.querySelectorAll(`input[name="question_${question.id}"]`);
-                            radioButtons.forEach(rb => rb.parentElement.classList.remove('selected'));
-                            optionWrapper.classList.add('selected');
-                            const nextStep = index + 1;
-                            if (nextStep < data.questions.length) {
-                                document.querySelector(`[data-step="${nextStep}"]`).classList.add('active');
-                            }
-                            questionTitle.querySelector('.done-icon').style.display = 'inline-block';
-                        });
-                    });
-
-                    questionWrapper.appendChild(questionTitle);
-                    questionWrapper.appendChild(optionsContainer);
-                    questionsContainer.appendChild(questionWrapper);
                 });
 
-                document.querySelector('[data-step="0"]').classList.add('active'); // Show first question
-            })
-            .catch(error => console.error('Error fetching questions:', error));
+                questionWrapper.appendChild(questionTitle);
+                questionWrapper.appendChild(optionsContainer);
+                questionsContainer.appendChild(questionWrapper);
+            });
+
+            // Show first question
+            document.querySelector('[data-step="0"]').classList.add('active');
+
+            // Hide the next step button initially
+            nextStepButton.classList.remove('show');
+        })
+        .catch(error => console.error('Error fetching questions:', error));
+}
+
+// Function to handle "Want to add a second vehicle?" logic
+function handleSecondVehicleChoice(answer, secondVehicleQuestions) {
+    const nextStepButton = document.getElementById('next-step-button');
+    
+    if (answer === 'Yes') {
+        // Check if the second vehicle form already exists to avoid duplicates
+        if (!document.getElementById('vehicle-form-2')) {  
+            repeatVehicleForm();  // Add the second "Let's get started" section for the second vehicle
+            showSecondVehicleQuestions(secondVehicleQuestions);  // Display questions related to the second vehicle
+        }
+        nextStepButton.classList.remove('show');  // Hide the Next Step button until the second vehicle questions are answered
+    } else if (answer === 'No') {
+        // Reset the second vehicle form and related questions
+        removeSecondVehicleForm();  // Removes the second car form if exists
+        hideSecondVehicleQuestions();  // Hides all the second car questions
+        nextStepButton.classList.add('show');  // Show the next step button once second car is removed
     }
+}
+
+// Function to repeat the vehicle form for a second car
+function repeatVehicleForm() {
+    const currentCar = 2;  // This is the second car
+
+    // Clone the original vehicle form
+    const vehicleForm = document.getElementById('vehicle-form');
+    const clonedForm = vehicleForm.cloneNode(true); // Clone the form
+    clonedForm.id = `vehicle-form-${currentCar}`; // Assign unique ID to each cloned form
+    const formTitle = clonedForm.querySelector('h2');
+    formTitle.innerHTML = `<div class="done-icon" style="display:none;"></div> Let's get started, what car do you drive? (Car ${currentCar})`;
+
+    // Reset fields in the cloned form
+    clonedForm.querySelectorAll('select').forEach(select => select.value = '');
+
+    // Insert the cloned form directly after the "Want to add a second vehicle?" section
+    const secondVehicleQuestion = document.querySelector(`[data-step="4"]`); // The step for "Want to add a second vehicle"
+    secondVehicleQuestion.insertAdjacentElement('afterend', clonedForm);
+}
+
+// Function to show second vehicle questions
+function showSecondVehicleQuestions(questions) {
+    const questionsContainer = document.getElementById('questions-container');
+    
+    // Add second vehicle questions below the new form
+    questions.forEach((question, index) => {
+        const questionWrapper = document.createElement('div');
+        questionWrapper.classList.add('question-step');
+        questionWrapper.setAttribute('data-step', index + 5); // Offset for second vehicle
+
+        const questionTitle = document.createElement('h2');
+        questionTitle.classList.add('question-title');
+        questionTitle.innerHTML = `<div class="done-icon" style="display: none;"></div> ${question.question}`;
+
+        const optionsContainer = document.createElement('div');
+        optionsContainer.classList.add('question-options');
+
+        question.choices.forEach(choice => {
+            const optionWrapper = document.createElement('label');
+            optionWrapper.classList.add('radio-button');
+
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = `question_${question.id}`;
+            input.value = choice;
+
+            const radioCircle = document.createElement('span');
+            optionWrapper.appendChild(input);
+            optionWrapper.appendChild(radioCircle);
+
+            const label = document.createElement('span');
+            label.classList.add('radio-label');
+            label.textContent = choice;
+            optionWrapper.appendChild(label);
+
+            optionsContainer.appendChild(optionWrapper);
+
+            input.addEventListener('change', () => {
+                const radioButtons = document.querySelectorAll(`input[name="question_${question.id}"]`);
+                radioButtons.forEach(rb => rb.parentElement.classList.remove('selected'));
+                optionWrapper.classList.add('selected');
+                questionTitle.querySelector('.done-icon').style.display = 'inline-block';
+            });
+        });
+
+        questionWrapper.appendChild(questionTitle);
+        questionWrapper.appendChild(optionsContainer);
+        questionsContainer.appendChild(questionWrapper);
+    });
+
+    // Show the Next Step button after second vehicle questions
+    document.querySelector(`[data-step="${questions.length + 4}"]`).addEventListener('change', () => {
+        document.getElementById('next-step-button').classList.add('show');
+    });
+}
+
+// Function to remove the second vehicle form
+function removeSecondVehicleForm() {
+    const secondVehicleForm = document.getElementById('vehicle-form-2');
+    if (secondVehicleForm) {
+        secondVehicleForm.remove();  // Remove the second car form
+    }
+}
+
+// Function to hide second vehicle questions
+function hideSecondVehicleQuestions() {
+    const secondVehicleQuestions = document.querySelectorAll('[data-step]');
+    secondVehicleQuestions.forEach(question => {
+        if (parseInt(question.getAttribute('data-step')) > 4) {
+            question.classList.remove('active');
+        }
+    });
+}
+
 </script>
+
+
 
 </body>
 </html>
