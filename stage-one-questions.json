@@ -1,86 +1,70 @@
 {
-  "questions": [
+    "questions": [
       {
-          "id": 1,
-          "question": "What do you use your Buick for?",
-          "choices": [
-              "Getting to Work",
-              "Running Errands",
-              "Pleasure",
-              "Uber / Lyft"
-          ]
+        "id": 1,
+        "question": "What do you use your {make} {model} for?",
+        "choices": ["Getting to Work", "Running Errands", "Pleasure", "Uber / Lyft"]
       },
       {
-          "id": 2,
-          "question": "How many miles per day do you drive?",
-          "choices": [
-              "5",
-              "10",
-              "20",
-              "30+"
-          ]
+        "id": 2,
+        "question": "How many miles per day do you drive your {make} {model}?",
+        "choices": ["5", "10", "20", "30+"]
       },
       {
-          "id": 3,
-          "question": "Do you own your Buick Envision?",
-          "choices": [
-              "Own",
-              "Lease",
-              "Finance"
-          ]
+        "id": 3,
+        "question": "Do you own your {make} {model}?",
+        "choices": ["Own", "Lease", "Finance"]
       },
       {
-          "id": 4,
-          "question": "Would You Like Full Coverage or Liability Only?",
-          "choices": [
-              "Full Coverage",
-              "Liability Only"
-          ]
+        "id": 4,
+        "question": "Would You Like Full Coverage or Liability Only for your {make} {model}?",
+        "choices": ["Full Coverage", "Liability Only"]
       },
       {
-          "id": 5,
-          "question": "Want to add a second vehicle?",
-          "choices": [
-              "Yes",
-              "No"
-          ]
+        "id": 5,
+        "question": "Select Deductible for Collision for your {make} {model}",
+        "choices": ["$1000", "$500", "$250", "$200", "$100", "$50", "$0"]
       },
       {
-          "id": 6,
-          "question": "What do you use your second vehicle for?",
-          "choices": [
-              "Getting to Work",
-              "Running Errands",
-              "Pleasure",
-              "Uber / Lyft"
-          ]
+        "id": 6,
+        "question": "Select Deductible for Comprehensive for your {make} {model}",
+        "choices": ["$1000", "$500", "$250", "$200", "$100", "$50", "$0"]
       },
       {
-          "id": 7,
-          "question": "How many miles per day do you drive your second vehicle?",
-          "choices": [
-              "5",
-              "10",
-              "20",
-              "30+"
-          ]
+        "id": 7,
+        "question": "Want to add a second vehicle?",
+        "choices": ["Yes", "No"]
       },
       {
-          "id": 8,
-          "question": "Do you own your second vehicle?",
-          "choices": [
-              "Own",
-              "Lease",
-              "Finance"
-          ]
+        "id": 8,
+        "question": "What do you use your second vehicle ({make} {model}) for?",
+        "choices": ["Getting to Work", "Running Errands", "Pleasure", "Uber / Lyft"]
       },
       {
-          "id": 9,
-          "question": "Would You Like Full Coverage or Liability Only for your second vehicle?",
-          "choices": [
-              "Full Coverage",
-              "Liability Only"
-          ]
+        "id": 9,
+        "question": "How many miles per day do you drive your second vehicle ({make} {model})?",
+        "choices": ["5", "10", "20", "30+"]
+      },
+      {
+        "id": 10,
+        "question": "Do you own your second vehicle ({make} {model})?",
+        "choices": ["Own", "Lease", "Finance"]
+      },
+      {
+        "id": 11,
+        "question": "Would You Like Full Coverage or Liability Only for your second vehicle ({make} {model})?",
+        "choices": ["Full Coverage", "Liability Only"]
+      },
+      {
+        "id": 12,
+        "question": "Select Deductible for Collision for your second vehicle ({make} {model})",
+        "choices": ["$1000", "$500", "$250", "$200", "$100", "$50", "$0"]
+      },
+      {
+        "id": 13,
+        "question": "Select Deductible for Comprehensive for your second vehicle ({make} {model})",
+        "choices": ["$1000", "$500", "$250", "$200", "$100", "$50", "$0"]
       }
-  ]
-}
+    ]
+  }
+  
