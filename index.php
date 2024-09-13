@@ -197,6 +197,41 @@
     display: block; /* Show when 'show' class is added */
 }
 
+/* Navigation Link Styles */
+.nav-link {
+    position: relative;
+    color: #4a5568; /* text-gray-700 */
+    transition: color 0.3s;
+}
+
+.nav-link.active {
+    color: #ff0080; /* Pink color */
+    font-weight: bold;
+}
+
+.nav-link .nav-icon {
+    font-size: 1rem;
+    margin-right: 5px;
+    color: #ff0080; /* Pink color */
+}
+
+/* Hover effect */
+.nav-link:hover {
+    color: #000000; /* text-black */
+}
+
+/* Ensure the icon aligns with the text */
+.nav-link .nav-icon {
+    vertical-align: middle;
+}
+
+/* Adjust the spacing */
+.nav-link span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
     </style>
 </head>
 <body>
@@ -207,15 +242,19 @@
 <!-- Navigation Tabs with Progress Bar -->
 <nav class="bg-white border-t border-gray-200 shadow-sm">
     <div class="container mx-auto flex justify-center py-5">
-        <a href="#" class="mx-5 text-sm font-semibold text-gray-700 hover:text-black">Vehicles</a>
-        <a href="#" class="mx-5 text-sm font-semibold text-gray-700 hover:text-black">Drivers</a>
-        <a href="#" class="mx-5 text-sm font-semibold text-gray-700 hover:text-black">Final Details</a>
-        <a href="#" class="mx-5 text-sm font-semibold text-gray-700 hover:text-black">Quotes</a>
+        <a href="#" id="nav-vehicles" class="nav-link mx-5 text-sm font-semibold text-gray-700 hover:text-black">
+            <span class="nav-icon" id="nav-icon-vehicles" style="display: none;">✔</span>
+            Vehicles
+        </a>
+        <a href="#" id="nav-drivers" class="nav-link mx-5 text-sm font-semibold text-gray-700 hover:text-black">Drivers</a>
+        <a href="#" id="nav-final-details" class="nav-link mx-5 text-sm font-semibold text-gray-700 hover:text-black">Final Details</a>
+        <a href="#" id="nav-quotes" class="nav-link mx-5 text-sm font-semibold text-gray-700 hover:text-black">Quotes</a>
     </div>
     <div class="w-full bg-gray-200 h-1">
         <div id="progress-bar" class="bg-pink-500 h-1" style="width: 14%;"></div>
     </div>
 </nav>
+
 
 <!-- Container for the form content -->
 <div class="container mx-auto p-4 max-w-screen-lg">
@@ -757,6 +796,43 @@
         console.log('Collected Data:', JSON.stringify(data, null, 2));
         // Proceed to the next step or submit the data
     });
+
+    // After the user clicks the "Next Step" button
+nextStepButton.addEventListener('click', () => {
+    // Update the navigation bar
+    markVehiclesStageCompleted();
+
+    // Proceed to the next step or navigate to the next page
+    // For now, we'll log the collected data
+    console.log('Collected Data:', JSON.stringify(data, null, 2));
+    // Here, you can redirect to the next page or handle the next stage
+});
+
+// Function to update the navigation bar
+function markVehiclesStageCompleted() {
+    const navVehicles = document.getElementById('nav-vehicles');
+    const navIconVehicles = document.getElementById('nav-icon-vehicles');
+
+    // Add the 'active' class to the 'Vehicles' link
+    navVehicles.classList.add('active');
+
+    // Show the done icon
+    navIconVehicles.style.display = 'inline';
+
+    // Optionally, you can update the progress bar width
+    const progressBar = document.getElementById('progress-bar');
+    progressBar.style.width = '28%'; // Update as per your progress logic
+}
+
+// Event listener for the 'Vehicles' link to navigate back to the current page
+const navVehiclesLink = document.getElementById('nav-vehicles');
+navVehiclesLink.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent default link behavior
+    // Since we're already on the Vehicles page, we can scroll to the top or reload
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Or, if you have sections, you can scroll to the Vehicles section
+});
+
 </script>
 
 
