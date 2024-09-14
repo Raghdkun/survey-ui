@@ -34,16 +34,16 @@
 
         /* Blue done icon styles */
         .done-icon {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            background-color: #1E90FF;
-            border-radius: 50%;
-            color: white;
-            text-align: center;
-            line-height: 24px;
-            margin-right: 10px;
-        }
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-color: #1E90FF;
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    line-height: 24px;
+    margin-right: 10px;
+}
 
         .done-icon::after {
             content: '✔';
@@ -231,6 +231,32 @@
     vertical-align: middle;
 }
 
+#dob-form {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: 0.2s; /* Optional delay */
+}
+/* Name Input Styles */
+.name-input {
+    font-size: 1.25rem;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    width: 100%;
+}
+
+.name-input:focus {
+    border-color: #ff0080;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 0, 128, 0.2);
+}
+
+.name-input.error {
+    border-color: red;
+}
+.stage {
+    text-align: center;
+}
 
     </style>
 </head>
@@ -276,13 +302,16 @@
 
 
 <!-- Navigation Tabs with Progress Bar -->
-<nav class="bg-white border-t border-gray-200 shadow-sm">
+  <!-- Navigation Bar -->
+  <nav class="bg-white border-t border-gray-200 shadow-sm">
     <div class="container mx-auto flex justify-center py-5">
         <a href="#" id="nav-vehicles" class="nav-link mx-5 text-sm font-semibold text-gray-700 hover:text-black">
             <span class="nav-icon" id="nav-icon-vehicles" style="display: none;">✔</span>
             Vehicles
         </a>
-        <a href="#" id="nav-drivers" class="nav-link mx-5 text-sm font-semibold text-gray-700 hover:text-black">Drivers</a>
+        <a href="#" id="nav-drivers" class="nav-link mx-5 text-sm font-semibold text-gray-700 hover:text-black">
+            Drivers
+        </a>
         <a href="#" id="nav-final-details" class="nav-link mx-5 text-sm font-semibold text-gray-700 hover:text-black">Final Details</a>
         <a href="#" id="nav-quotes" class="nav-link mx-5 text-sm font-semibold text-gray-700 hover:text-black">Quotes</a>
     </div>
@@ -291,69 +320,132 @@
     </div>
 </nav>
 
-
-<!-- Container for the form content -->
-<div class="container mx-auto p-4 max-w-screen-lg">
-    <!-- First vehicle form -->
-    <form id="vehicle-form" class="bg-white p-10 form-container">
-        <div class="form-group">
-            <h2 class="question-title">
-                <div class="done-icon" id="main-done-icon" style="display:none;"></div>
-                Let's get started, what car do you drive?
-            </h2>
-        </div>
-
-        <!-- Vehicle Year Dropdown -->
-        <div class="form-group">
-            <label for="vehicle-year" class="form-label">Select Vehicle Year</label>
-            <div class="custom-dropdown">
-                <select id="vehicle-year" name="vehicle-year" class="form-select">
-                    <option value="">Select Vehicle Year</option>
-                    <!-- Years populated dynamically -->
-                </select>
-            </div>
-        </div>
-
-        <!-- Vehicle Make Dropdown -->
-        <div id="step-2" class="form-step">
+<div id="stage-vehicles" class="stage">
+    <div class="container mx-auto p-4 max-w-screen-lg">
+        <!-- First vehicle form -->
+        <form id="vehicle-form" class="bg-white p-10 form-container">
             <div class="form-group">
-                <label for="vehicle-make" class="form-label">Select Vehicle Make</label>
-                <div class="custom-dropdown">
-                    <select id="vehicle-make" name="vehicle-make" class="form-select">
-                        <option value="">Select Vehicle Make</option>
-                        <!-- Makes populated dynamically -->
-                    </select>
-                </div>
+                <h2 class="question-title">
+                    <div class="done-icon" id="main-done-icon" style="display:none;"></div>
+                    Let's get started, what car do you drive?
+                </h2>
             </div>
-        </div>
-
-        <!-- Vehicle Model Dropdown -->
-        <div id="step-3" class="form-step">
-            <div class="form-group">
-                <label for="vehicle-model" class="form-label">Select Vehicle Model</label>
-                <div class="custom-dropdown">
-                    <select id="vehicle-model" name="vehicle-model" class="form-select">
-                        <option value="">Select Vehicle Model</option>
-                        <!-- Models populated dynamically -->
-                    </select>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    <!-- Dynamic Questions Section -->
-    <form id="dynamic-questions-form" class="survey-form">
-        <div id="questions-container"></div>
-    </form>
-
     
+            <!-- Vehicle Year Dropdown -->
+            <div class="form-group">
+                <label for="vehicle-year" class="form-label">Select Vehicle Year</label>
+                <div class="custom-dropdown">
+                    <select id="vehicle-year" name="vehicle-year" class="form-select">
+                        <option value="">Select Vehicle Year</option>
+                        <!-- Years populated dynamically -->
+                    </select>
+                </div>
+            </div>
+    
+            <!-- Vehicle Make Dropdown -->
+            <div id="step-2" class="form-step">
+                <div class="form-group">
+                    <label for="vehicle-make" class="form-label">Select Vehicle Make</label>
+                    <div class="custom-dropdown">
+                        <select id="vehicle-make" name="vehicle-make" class="form-select">
+                            <option value="">Select Vehicle Make</option>
+                            <!-- Makes populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Vehicle Model Dropdown -->
+            <div id="step-3" class="form-step">
+                <div class="form-group">
+                    <label for="vehicle-model" class="form-label">Select Vehicle Model</label>
+                    <div class="custom-dropdown">
+                        <select id="vehicle-model" name="vehicle-model" class="form-select">
+                            <option value="">Select Vehicle Model</option>
+                            <!-- Models populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    
+        <!-- Dynamic Questions Section -->
+        <form id="dynamic-questions-form" class="survey-form">
+            <div id="questions-container"></div>
+        </form>
+    
+        
+    
+ 
 
- <!-- Next Step Button -->
+    </div>
+</div>
+<!-- Drivers Stage -->
+<div id="stage-drivers" class="stage" style="display: none;">
+    <!-- Name Form -->
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-auto mt-10" id="name-form">
+        <!-- Title and subtitle -->
+        <h2 class="question-title text-2xl font-semibold text-center mb-2">
+            <div class="done-icon" id="name-done-icon" style="display: none;"></div>
+            What is your name?
+        </h2>
+        <p class="text-gray-500 text-center mb-6">The better we know you, the more accurate quotes we can provide</p>
 
- <div class="next-step-container">
-    <button id="next-step-button" class="next-step-button">Next Step</button>
+        <!-- First Name and Last Name Input Fields -->
+        <div>
+            <div class="mb-4">
+                <input type="text" id="first-name" name="first_name" placeholder="First Name" class="name-input w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder-gray-400">
+            </div>
+            <div class="mb-4">
+                <input type="text" id="last-name" name="last_name" placeholder="Last Name" class="name-input w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder-gray-400">
+            </div>
+        </div>
+    </div>
+
+    <!-- Date of Birth Form (Initially Hidden) -->
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-auto mt-10" id="dob-form" style="display: none;">
+        <!-- Title -->
+        <h2 class="question-title text-2xl font-semibold text-center mb-4">
+            <div class="done-icon" id="dob-done-icon" style="display: none;"></div>
+            What is your date of birth?
+        </h2>
+
+        <!-- Date of Birth Input -->
+        <div class="dob-input-container flex items-center justify-between border border-gray-300 rounded-lg p-4">
+            <!-- Month Input -->
+            <input type="text" id="dob-month" placeholder="MM" maxlength="2" class="dob-input w-1/4 text-center text-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 rounded-md text-lg">
+            
+            <!-- Separator -->
+            <span class="text-lg text-gray-400">/</span>
+            
+            <!-- Day Input -->
+            <input type="text" id="dob-day" placeholder="DD" maxlength="2" class="dob-input w-1/4 text-center text-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 rounded-md text-lg">
+            
+            <!-- Separator -->
+            <span class="text-lg text-gray-400">/</span>
+            
+            <!-- Year Input -->
+            <input type="text" id="dob-year" placeholder="YYYY" maxlength="4" class="dob-input w-1/4 text-center text-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 rounded-md text-lg">
+        </div>
+    </div>
+
+    <!-- Next Step Button -->
+    <div class="next-step-container">
+        <button id="next-step-button-drivers" class="next-step-button">Next Step</button>
+    </div>
 </div>
+
+    <!-- Next Step Button -->
+    
+    <div class="next-step-container">
+        <button id="next-step-button" class="next-step-button">Next Step</button>
+    </div>
+    <!-- Next Step Button for Drivers Stage -->
+<div class="next-step-container">
+    <button id="next-step-button-drivers" class="next-step-button">Next Step</button>
 </div>
+<!-- Container for the form content -->
+
 <script>
     function scrollToElement(element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -364,12 +456,122 @@
     let questionsData = null;
     let data = {
         vehicle1: {},
-        answers1: {}
+        answers1: {},
         // vehicle2 and answers2 will be added when needed
+        driver: {}
     };
 
     // Get the next step button and make it accessible globally
     const nextStepButton = document.getElementById('next-step-button');
+    // Stage Containers
+const stageVehicles = document.getElementById('stage-vehicles');
+const stageDrivers = document.getElementById('stage-drivers');
+
+// Navigation elements
+const navVehicles = document.getElementById('nav-vehicles');
+const navIconVehicles = document.getElementById('nav-icon-vehicles');
+const navDrivers = document.getElementById('nav-drivers');
+let navIconDrivers = document.getElementById('nav-icon-drivers');
+
+// Get the next step buttons
+const nextStepButtonVehicles = document.getElementById('next-step-button');
+const nextStepButtonDrivers = document.getElementById('next-step-button-drivers');
+const nameForm = document.getElementById('name-form');
+const firstNameInput = document.getElementById('first-name');
+const lastNameInput = document.getElementById('last-name');
+const nameDoneIcon = document.getElementById('name-done-icon');
+function showStage(stage) {
+    // Hide all stages
+    document.querySelectorAll('.stage').forEach(stageDiv => {
+        stageDiv.classList.remove('active');
+        stageDiv.style.display = 'none';
+    });
+
+    // Show the selected stage
+    switch (stage) {
+        case 'vehicles':
+            stageVehicles.classList.add('active');
+            stageVehicles.style.display = 'block';
+            updateNavigation('vehicles');
+            break;
+        case 'drivers':
+            stageDrivers.classList.add('active');
+            stageDrivers.style.display = 'block';
+            updateNavigation('drivers');
+            break;
+        // Add cases for additional stages if needed
+        default:
+            break;
+    }
+}
+
+// Function to update navigation bar
+function updateNavigation(currentStage) {
+    // Remove 'active' class from all nav links
+    document.querySelectorAll('.nav-link').forEach(navLink => {
+        navLink.classList.remove('active');
+    });
+
+    // Update progress bar width based on the current stage
+    const progressBar = document.getElementById('progress-bar');
+    let progressWidth = '14%'; // Default progress width
+
+    switch (currentStage) {
+        case 'vehicles':
+            navVehicles.classList.add('active');
+            progressWidth = '14%';
+            break;
+        case 'drivers':
+            navVehicles.classList.add('active');
+            navIconVehicles.style.display = 'inline'; // Mark Vehicles as completed
+            navDrivers.classList.add('active');
+            progressWidth = '28%';
+            break;
+        // Update cases for additional stages
+        default:
+            break;
+    }
+
+    // Update progress bar
+    progressBar.style.width = progressWidth;
+}
+
+// Set up navigation link event listeners
+function setupNavigation() {
+    navVehicles.addEventListener('click', (e) => {
+        e.preventDefault();
+        showStage('vehicles');
+        scrollToTop();
+    });
+
+    navDrivers.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (navIconVehicles.style.display === 'inline') {
+            // Only allow navigation to Drivers stage if Vehicles stage is completed
+            showStage('drivers');
+            scrollToTop();
+        } else {
+            alert('Please complete the Vehicles stage first.');
+        }
+    });
+
+    // Add event listeners for additional nav links as needed
+}
+
+// Function to scroll to the top of the page
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    // Show the Vehicles stage initially
+    showStage('vehicles');
+
+    // Set up navigation links
+    setupNavigation();
+
+    // ... your existing code ...
+});
 
     // Dynamically populate year dropdown for the vehicle
     const currentYear = new Date().getFullYear();
@@ -401,7 +603,7 @@
             }
 
             // Hide the next step button initially
-            nextStepButton.classList.remove('show');
+            nextStepButtonVehicles.classList.remove('show');
 
             // Show fade-in effect for next question and show done icon
             yearDropdown.addEventListener('change', () => {
@@ -521,8 +723,8 @@
                                     scrollToElement(nextQuestion); // Scroll to the next question
                                 } else {
                                     // No more questions, show next step button
-                                    nextStepButton.classList.add('show');
-                                    scrollToElement(nextStepButton); // Scroll to the next step button
+                                    nextStepButtonVehicles.classList.add('show');
+                                    scrollToElement(nextStepButtonVehicles); // Scroll to the next step button
                                 }
                             }
                         });
@@ -541,7 +743,7 @@
                 }
 
                 // Hide the next step button initially
-                nextStepButton.classList.remove('show');
+                nextStepButtonVehicles.classList.remove('show');
             })
             .catch(error => {
                 console.error('Error fetching questions:', error);
@@ -560,7 +762,7 @@
             if (!document.getElementById('vehicle-form-2')) {
                 repeatVehicleForm(); // Add the second "Let's get started" section for the second vehicle
             }
-            nextStepButton.classList.remove('show'); // Hide the Next Step button until the second vehicle questions are answered
+            nextStepButtonVehicles.classList.remove('show'); // Hide the Next Step button until the second vehicle questions are answered
 
             // Scroll to the second vehicle form
             setTimeout(() => {
@@ -574,8 +776,8 @@
             // Reset the second vehicle form and related questions
             removeSecondVehicleForm(); // Removes the second car form if exists
             hideSecondVehicleQuestions(); // Hides all the second car questions
-            nextStepButton.classList.add('show'); // Show the next step button once second car is removed
-            scrollToElement(nextStepButton); // Scroll to the next step button
+            nextStepButtonVehicles.classList.add('show'); // Show the next step button once second car is removed
+            scrollToElement(nextStepButtonVehicles); // Scroll to the next step button
         } else {
             alert('Invalid selection. Please choose "Yes" or "No".');
         }
@@ -782,8 +984,8 @@
                         scrollToElement(nextQuestion); // Scroll to the next question
                     } else {
                         // Last question answered, show next step button
-                        nextStepButton.classList.add('show');
-                        scrollToElement(nextStepButton); // Scroll to the next step button
+                        nextStepButtonVehicles.classList.add('show');
+                        scrollToElement(nextStepButtonVehicles); // Scroll to the next step button
                     }
                 });
             });
@@ -827,11 +1029,15 @@
         }
     }
 
-    // Next Step Button Click Handler
-    nextStepButton.addEventListener('click', () => {
-        console.log('Collected Data:', JSON.stringify(data, null, 2));
-        // Proceed to the next step or submit the data
-    });
+    nextStepButtonVehicles.addEventListener('click', () => {
+    // Update the navigation bar
+    navVehicles.classList.add('active');
+    navIconVehicles.style.display = 'inline'; // Show done icon
+
+    // Proceed to the Drivers stage
+    showStage('drivers');
+    scrollToTop();
+});
 
     // After the user clicks the "Next Step" button
 nextStepButton.addEventListener('click', () => {
@@ -859,6 +1065,187 @@ function markVehiclesStageCompleted() {
     const progressBar = document.getElementById('progress-bar');
     progressBar.style.width = '28%'; // Update as per your progress logic
 }
+
+
+// Drivers Stage JavaScript
+
+// Function to validate name inputs
+function validateName() {
+    const firstName = firstNameInput.value.trim();
+    const lastName = lastNameInput.value.trim();
+
+    let isValid = true;
+
+    // Simple validation checks
+    if (firstName === '') {
+        isValid = false;
+        firstNameInput.classList.add('error');
+    } else {
+        firstNameInput.classList.remove('error');
+    }
+
+    if (lastName === '') {
+        isValid = false;
+        lastNameInput.classList.add('error');
+    } else {
+        lastNameInput.classList.remove('error');
+    }
+
+    if (isValid) {
+        // Store the name data
+        data.driver.firstName = firstName;
+        data.driver.lastName = lastName;
+
+        // Show the done icon
+        nameDoneIcon.style.display = 'inline-block';
+
+        // Show the Date of Birth form
+        dobForm.style.display = 'block';
+        scrollToElement(dobForm); // Scroll to the DOB form
+
+        // Optionally, hide the Next Step button until DOB is filled
+        nextStepButtonDrivers.classList.remove('show');
+    } else {
+        // Hide the done icon and DOB form
+        nameDoneIcon.style.display = 'none';
+        dobForm.style.display = 'none';
+        nextStepButtonDrivers.classList.remove('show');
+    }
+}
+// Event listeners for name inputs
+[firstNameInput, lastNameInput].forEach(input => {
+    input.addEventListener('input', () => {
+        // Validate the inputs
+        validateName();
+    });
+
+    // Remove error class on focus
+    input.addEventListener('focus', () => {
+        input.classList.remove('error');
+    });
+});
+
+
+// Get elements for the Drivers stage
+const dobForm = document.getElementById('dob-form');
+const dobMonth = document.getElementById('dob-month');
+const dobDay = document.getElementById('dob-day');
+const dobYear = document.getElementById('dob-year');
+const dobDoneIcon = document.getElementById('dob-done-icon');
+
+// Function to validate date of birth
+function validateDOB() {
+    const month = dobMonth.value.trim();
+    const day = dobDay.value.trim();
+    const year = dobYear.value.trim();
+
+    let isValid = true;
+
+    // Simple validation checks
+    if (!/^\d{2}$/.test(month) || parseInt(month) < 1 || parseInt(month) > 12) {
+        isValid = false;
+        dobMonth.classList.add('error');
+    } else {
+        dobMonth.classList.remove('error');
+    }
+
+    if (!/^\d{2}$/.test(day) || parseInt(day) < 1 || parseInt(day) > 31) {
+        isValid = false;
+        dobDay.classList.add('error');
+    } else {
+        dobDay.classList.remove('error');
+    }
+
+    if (!/^\d{4}$/.test(year) || parseInt(year) < 1900 || parseInt(year) > new Date().getFullYear()) {
+        isValid = false;
+        dobYear.classList.add('error');
+    } else {
+        dobYear.classList.remove('error');
+    }
+
+    if (isValid) {
+        // Additional validation for valid date
+        const dateString = `${year}-${month}-${day}`;
+        const date = new Date(dateString);
+        if (date.getFullYear() !== parseInt(year) || date.getMonth() + 1 !== parseInt(month) || date.getDate() !== parseInt(day)) {
+            isValid = false;
+            dobMonth.classList.add('error');
+            dobDay.classList.add('error');
+            dobYear.classList.add('error');
+        } else {
+            dobMonth.classList.remove('error');
+            dobDay.classList.remove('error');
+            dobYear.classList.remove('error');
+        }
+    }
+
+    if (isValid) {
+        // Store the date of birth
+        data.driver.dateOfBirth = dateString;
+
+        // Show the done icon
+        dobDoneIcon.style.display = 'inline-block';
+
+        // Show the next step button
+        nextStepButtonDrivers.classList.add('show');
+    } else {
+        // Hide the done icon and next step button
+        dobDoneIcon.style.display = 'none';
+        nextStepButtonDrivers.classList.remove('show');
+    }
+}
+
+// Event listeners for input fields
+// Event listeners for DOB input fields
+[dobMonth, dobDay, dobYear].forEach(input => {
+    input.addEventListener('input', () => {
+        // Move focus to next input when max length is reached
+        if (input.value.length === input.maxLength) {
+            if (input === dobMonth) {
+                dobDay.focus();
+            } else if (input === dobDay) {
+                dobYear.focus();
+            } else if (input === dobYear) {
+                input.blur(); // Optionally, blur the input when done
+            }
+        }
+
+        // Validate the inputs
+        validateDOB();
+    });
+
+    // Remove error class on focus
+    input.addEventListener('focus', () => {
+        input.classList.remove('error');
+    });
+});
+
+
+
+// Next Step Button Click Handler for Drivers Stage
+nextStepButtonDrivers.addEventListener('click', () => {
+    // Update the navigation bar
+    navDrivers.classList.add('active');
+
+    // Create and show the done icon if it doesn't exist
+    if (!navIconDrivers) {
+        navIconDrivers = document.createElement('span');
+        navIconDrivers.classList.add('nav-icon');
+        navIconDrivers.id = 'nav-icon-drivers';
+        navIconDrivers.textContent = '✔';
+        navDrivers.insertBefore(navIconDrivers, navDrivers.firstChild);
+    }
+    navIconDrivers.style.display = 'inline';
+
+    // Proceed to the next stage (e.g., Final Details)
+    // For now, we'll log the collected data
+    console.log('Collected Data:', JSON.stringify(data, null, 2));
+
+    // Show the next stage (implement similar to previous stages)
+    // showStage('final-details');
+});
+
+
 
 // Event listener for the 'Vehicles' link to navigate back to the current page
 const navVehiclesLink = document.getElementById('nav-vehicles');
