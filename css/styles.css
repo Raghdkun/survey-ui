@@ -1,0 +1,269 @@
+/* Dropdown focus styling */
+select:focus {
+    border-color: #ff0080;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 0, 128, 0.2);
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Hidden by default */
+.form-step {
+    opacity: 0;
+    display: none;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Visible step */
+.form-step.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+/* Done icon styles */
+.done-icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-color: #ff0080; /* Updated to primary color */
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    line-height: 24px;
+    margin-right: 10px;
+}
+
+.done-icon::after {
+    content: '✔';
+}
+
+/* Form group layout for alignment */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+/* Uniform dropdown size and style */
+.custom-dropdown {
+    width: 100%;
+}
+
+.form-container {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 600px;
+    box-shadow: none;
+}
+
+.form-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1.1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background-color: white;
+    appearance: none;
+}
+
+.question-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.form-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.question-step {
+    margin-bottom: 30px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    display: none;
+}
+
+.question-step.active {
+    display: block;
+    opacity: 1;
+}
+
+.question-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.radio-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(50% - 10px);
+    padding: 15px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+.radio-button.selected {
+    background-color: #ff0080; /* Updated to primary color */
+    color: white;
+}
+
+.radio-button input[type="radio"] {
+    display: none;
+}
+
+.radio-button input[type="radio"] + span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.radio-button.selected input[type="radio"] + span::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ff0080; /* Updated to primary color */
+}
+
+.radio-label {
+    margin-left: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Responsive fix for small screens */
+@media (max-width: 640px) {
+    .radio-button {
+        width: 100%;
+    }
+}
+
+/* Next Step Button Styles */
+.next-step-button {
+    display: none; /* Ensure it's hidden initially */
+    background-color: #ff0080; /* Updated to primary color */
+    color: white;
+    padding: 20px 40px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.next-step-button.show {
+    display: block; /* Show when 'show' class is added */
+}
+
+/* Navigation Link Styles */
+.nav-link {
+    position: relative;
+    color: #4a5568; /* text-gray-700 */
+    transition: color 0.3s;
+}
+
+.nav-link.active {
+    color: #ff0080; /* Pink color */
+    font-weight: bold;
+}
+
+.nav-link .nav-icon {
+    font-size: 1rem;
+    margin-right: 5px;
+    color: #ff0080; /* Pink color */
+}
+
+/* Hover effect */
+.nav-link:hover {
+    color: #000000; /* text-black */
+}
+
+/* Ensure the icon aligns with the text */
+.nav-link .nav-icon {
+    vertical-align: middle;
+}
+
+/* Adjust the spacing */
+.nav-link span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#dob-form {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: 0.2s; /* Optional delay */
+}
+
+/* Name Input Styles */
+.name-input {
+    font-size: 1.25rem;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    width: 100%;
+}
+
+.name-input:focus {
+    border-color: #ff0080;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 0, 128, 0.2);
+}
+
+.name-input.error {
+    border-color: red;
+}
+
+.stage {
+    text-align: center;
+}
+
+.dob-input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.dob-input {
+    width: 30%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    text-align: center;
+    margin-right: 5px;
+}
+
+.dob-input:focus {
+    border-color: #ff0080;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 0, 128, 0.2);
+}
