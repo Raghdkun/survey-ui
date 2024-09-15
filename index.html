@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartFinancial | Car Insurance Survey</title>
+    <!-- Include Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Link to your custom CSS -->
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-SZbPON6uTfKRJ6X4Q1HuvF7vydAEvBNx1XBw0WXhRn3h3Z9nIG3cIrSxfk4V6Kr6MglVNTOZ4ADv0uCU3Zs+Ug==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
 <!-- Header Section -->
@@ -148,29 +154,32 @@
             What is your date of birth?
         </h2>
         <!-- Date of Birth Input -->
-        <div class="dob-input-container flex items-center justify-between border border-gray-300 rounded-lg p-4">
+        <div class="dob-input-container flex items-center justify-center">
             <!-- Month Input -->
-            <input type="text" id="dob-month" placeholder="MM" maxlength="2" class="dob-input w-1/4 text-center text-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 rounded-md text-lg">
+            <input type="text" id="dob-month" placeholder="MM" maxlength="2" class="dob-input">
             <!-- Separator -->
             <span class="text-lg text-gray-400">/</span>
             <!-- Day Input -->
-            <input type="text" id="dob-day" placeholder="DD" maxlength="2" class="dob-input w-1/4 text-center text-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 rounded-md text-lg">            
+            <input type="text" id="dob-day" placeholder="DD" maxlength="2" class="dob-input">
             <!-- Separator -->
-            <span class="text-lg text-gray-400">/</span>            
+            <span class="text-lg text-gray-400">/</span>
             <!-- Year Input -->
-            <input type="text" id="dob-year" placeholder="YYYY" maxlength="4" class="dob-input w-1/4 text-center text-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 rounded-md text-lg">
+            <input type="text" id="dob-year" placeholder="YYYY" maxlength="4" class="dob-input">
         </div>
+        <!-- Error Message for DOB -->
+        <div id="dob-error-message" class="error-message" style="display: none;"></div>
     </div>
-    <!-- Driver Questions will be inserted here dynamically -->
+   
+</div>
+ <!-- Driver Questions will be inserted here dynamically -->
     <!-- Next Step Button for Drivers Stage -->
     <div class="next-step-container">
-        <button id="next-step-button-drivers" class="next-step-button">Next Step</button>
+        <button id="next-step-button-drivers" class="next-step-button" style="display: none;">Next Step</button>
     </div>
-</div>
 
 <!-- Include JavaScript Files -->
-<script src="/js/main.js"></script>
-<script src="/js/vehicles.js"></script>
-<script src="/js/drivers.js"></script>
+<script src="./js/main.js"></script>
+<script src="./js/vehicles.js"></script>
+<script src="./js/drivers.js"></script>
 </body>
 </html>

@@ -1,134 +1,151 @@
 {
-    "questions": [
-      {
-        "id": 1,
-        "question": "What is your gender?",
-        "type": "radio",
-        "choices": ["Male", "Female", "Non-binary"]
-      },
-      {
-        "id": 2,
-        "question": "Are you married?",
-        "type": "radio",
-        "choices": ["Yes", "No"]
-      },
-      {
-        "id": 3,
-        "question": "What is your education level?",
-        "type": "radio",
-        "choices": [
-          "Less than high school",
-          "High school diploma",
-          "Some college",
-          "Associate Degree",
-          "Bachelor’s Degree",
-          "Master’s Degree",
-          "Doctorate Degree"
-        ]
-      },
-      {
-        "id": 4,
-        "question": "What is your occupation?",
-        "type": "dropdown",
-        "choices": [
-          "Administrative Clerical",
-          "Architect",
-          "Business Owner",
-          "Certified Public Accountant",
-          "Clergy",
-          "Construction Trades",
-          "Consultant",
-          "Dentist",
-          "Disabled",
-          "Engineer",
-          "Financial Services",
-          "Health Care",
-          "Homemaker",
-          "Human Relations",
-          "Lawyer",
-          "Marketing",
-          "Manager Supervisor",
-          "Military Enlisted",
-          "Minor Not Applicable",
-          "Other / Not Listed",
-          "Other Non Technical",
-          "Other Technical",
-          "Physician",
-          "Professional Salaried",
-          "Professor",
-          "Retail",
-          "Retired",
-          "Sales Inside",
-          "Sales Outside",
-          "School Teacher",
-          "Scientist",
-          "Self Employed",
-          "Skilled Semi Skilled",
-          "Transportation / Logistics",
-          "Student",
-          "Unemployed"
-        ]
-      },
-      {
-        "id": 5,
-        "question": "What is your credit score?",
-        "type": "radio",
-        "choices": [
-          "Excellent (800-850)",
-          "Good (680-799)",
-          "Average (600-679)",
-          "Poor (300-599)"
-        ]
-      },
-      {
-        "id": 6,
-        "question": "What is the status of your driver’s license?",
-        "type": "radio",
-        "choices": [
-          "Active",
-          "Suspended",
-          "Expired",
-          "Permit",
-          "Foreign"
-        ]
-      },
-      {
-        "id": 7,
-        "question": "Do you require SR-22?",
-        "type": "radio",
-        "choices": ["Yes", "No"]
-      },
-      {
-        "id": 8,
-        "question": "Any incidents in the last 3 years?",
-        "type": "radio",
-        "choices": ["Yes", "No"]
-      },
-      {
-        "id": 9,
-        "question": "Type of incident",
-        "type": "radio",
-        "choices": ["Ticket", "Accident", "Claim", "DUI", "License Suspension"]
-      },
-      {
-        "id": 10,
-        "question": "Date of Accident",
-        "type": "date",
-        "choices": []
-      },
-      {
-        "id": 11,
-        "question": "What happened in the accident?",
-        "type": "dropdown",
-        "choices": [
-          "Collided with another car",
-          "Hit while stopped",
-          "Hit by another person",
-          "Rear-ended by another person",
-          "Single car accident",
-          "Other"
-        ]
-      }
-    ]
-  }
-  
+  "questions": [
+    {
+      "id": 1,
+      "key": "gender",
+      "question": "What is your gender?",
+      "type": "radio",
+      "choices": ["Male", "Female", "Non-binary"]
+    },
+    {
+      "id": 2,
+      "key": "is_married",
+      "question": "Are you married?",
+      "type": "radio",
+      "choices": ["Yes", "No"]
+    },
+    {
+      "id": 3,
+      "key": "education_level",
+      "question": "What is your education level?",
+      "type": "radio",
+      "choices": [
+        "Less than high school",
+        "High school diploma",
+        "Some college",
+        "Associate Degree",
+        "Bachelor’s Degree",
+        "Master’s Degree",
+        "Doctorate Degree"
+      ]
+    },
+    {
+      "id": 4,
+      "key": "occupation",
+      "question": "What is your occupation?",
+      "type": "dropdown",
+      "choices": [
+        "Administrative Clerical",
+        "Architect",
+        "Business Owner",
+        "Certified Public Accountant",
+        "Clergy",
+        "Construction Trades",
+        "Consultant",
+        "Dentist",
+        "Disabled",
+        "Engineer",
+        "Financial Services",
+        "Health Care",
+        "Homemaker",
+        "Human Relations",
+        "Lawyer",
+        "Marketing",
+        "Manager Supervisor",
+        "Military Enlisted",
+        "Minor Not Applicable",
+        "Other / Not Listed",
+        "Other Non Technical",
+        "Other Technical",
+        "Physician",
+        "Professional Salaried",
+        "Professor",
+        "Retail",
+        "Retired",
+        "Sales Inside",
+        "Sales Outside",
+        "School Teacher",
+        "Scientist",
+        "Self Employed",
+        "Skilled Semi Skilled",
+        "Transportation / Logistics",
+        "Student",
+        "Unemployed"
+      ]
+    },
+    {
+      "id": 5,
+      "key": "credit_score",
+      "question": "What is your credit score?",
+      "type": "radio",
+      "choices": [
+        "Excellent (800-850)",
+        "Good (680-799)",
+        "Average (600-679)",
+        "Poor (300-599)"
+      ]
+    },
+    {
+      "id": 6,
+      "key": "license_status",
+      "question": "What is the status of your driver’s license?",
+      "type": "radio",
+      "choices": [
+        "Active",
+        "Suspended",
+        "Expired",
+        "Permit",
+        "Foreign"
+      ]
+    },
+    {
+      "id": 7,
+      "key": "requires_sr22",
+      "question": "Do you require SR-22?",
+      "type": "radio",
+      "choices": ["Yes", "No"]
+    },
+    {
+      "id": 8,
+      "key": "incidents_last_3_years",
+      "question": "Any incidents in the last 3 years?",
+      "type": "radio",
+      "choices": ["Yes", "No"]
+    },
+    {
+      "id": 9,
+      "key": "incident_type",
+      "question": "Type of incident",
+      "type": "radio",
+      "choices": ["Ticket", "Accident", "Claim", "DUI", "License Suspension"]
+    },
+    {
+      "id": 10,
+      "key": "date_of_accident",
+      "question": "Date of Accident",
+      "type": "date",
+      "choices": []
+    },
+    {
+      "id": 11,
+      "key": "accident_details",
+      "question": "What happened in the accident?",
+      "type": "dropdown",
+      "choices": [
+        "Collided with another car",
+        "Hit while stopped",
+        "Hit by another person",
+        "Rear-ended by another person",
+        "Single car accident",
+        "Other"
+      ]
+    },
+    {
+      "id": 12,
+      "key": "add_second_driver",
+      "question": "Do you want to add a second driver?",
+      "type": "radio",
+      "choices": ["Yes", "No"]
+    }
+  ]
+}

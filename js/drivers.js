@@ -8,15 +8,22 @@
     const navIconDrivers = document.getElementById('nav-icon-drivers');
 
     // Get elements
+    const stageDrivers = document.getElementById('stage-drivers');
     const firstNameInput = document.getElementById('first-name');
     const lastNameInput = document.getElementById('last-name');
     const dobForm = document.getElementById('dob-form');
     const dobMonth = document.getElementById('dob-month');
     const dobDay = document.getElementById('dob-day');
     const dobYear = document.getElementById('dob-year');
+    const dobErrorMessage = document.getElementById('dob-error-message');
     const nextStepButtonDrivers = document.getElementById('next-step-button-drivers');
     const nameDoneIcon = document.getElementById('name-done-icon');
     const dobDoneIcon = document.getElementById('dob-done-icon');
+
+    // Remove duplicate declaration of scrollToElement
+    // Ensure that scrollToElement is accessible
+    // If scrollToElement is defined in main.js and added to window object
+    // We can use it directly without re-declaring
 
     // Function to validate name inputs
     function validateName() {
@@ -25,7 +32,6 @@
 
         let isValid = true;
 
-        // Simple validation checks
         if (firstName === '') {
             isValid = false;
             firstNameInput.classList.add('error');
@@ -41,32 +47,22 @@
         }
 
         if (isValid) {
-            // Store the name data
             data.driver.firstName = firstName;
             data.driver.lastName = lastName;
-
-            // Show the done icon
             nameDoneIcon.style.display = 'inline-block';
-
-            // Show the Date of Birth form
             dobForm.style.display = 'block';
             scrollToElement(dobForm);
-
-            // Hide the Next Step button until DOB is filled
-            nextStepButtonDrivers.classList.remove('show');
+            nextStepButtonDrivers.style.display = 'none';
         } else {
-            // Hide the done icon and DOB form
             nameDoneIcon.style.display = 'none';
             dobForm.style.display = 'none';
-            nextStepButtonDrivers.classList.remove('show');
+            nextStepButtonDrivers.style.display = 'none';
         }
     }
 
     // Event listeners for name inputs
     [firstNameInput, lastNameInput].forEach(input => {
         input.addEventListener('input', validateName);
-
-        // Remove error class on focus
         input.addEventListener('focus', () => {
             input.classList.remove('error');
         });
@@ -80,12 +76,10 @@
 
         let isValid = true;
 
-        // Regular expressions to ensure only numbers are entered
         const monthRegex = /^(0?[1-9]|1[0-2])$/;
         const dayRegex = /^(0?[1-9]|[12][0-9]|3[01])$/;
         const yearRegex = /^(19|20)\d{2}$/;
 
-        // Validate month
         if (!monthRegex.test(month)) {
             isValid = false;
             dobMonth.classList.add('error');
@@ -93,7 +87,6 @@
             dobMonth.classList.remove('error');
         }
 
-        // Validate day
         if (!dayRegex.test(day)) {
             isValid = false;
             dobDay.classList.add('error');
@@ -101,7 +94,6 @@
             dobDay.classList.remove('error');
         }
 
-        // Validate year
         const currentYear = new Date().getFullYear();
         if (!yearRegex.test(year) || parseInt(year) > currentYear) {
             isValid = false;
@@ -110,53 +102,63 @@
             dobYear.classList.remove('error');
         }
 
-        // Additional validation for correct date
         if (isValid) {
-            const dateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-            const date = new Date(dateString);
-            if (
-                date.getFullYear() !== parseInt(year) ||
-                date.getMonth() + 1 !== parseInt(month) ||
-                date.getDate() !== parseInt(day)
-            ) {
+            const dateIsValid = validateDate(month, day, year);
+            if (!dateIsValid) {
                 isValid = false;
                 dobMonth.classList.add('error');
                 dobDay.classList.add('error');
                 dobYear.classList.add('error');
+                dobErrorMessage.textContent = 'Please enter a valid date.';
+                dobErrorMessage.style.display = 'block';
             } else {
                 dobMonth.classList.remove('error');
                 dobDay.classList.remove('error');
                 dobYear.classList.remove('error');
+                dobErrorMessage.style.display = 'none';
             }
+        } else {
+            dobErrorMessage.textContent = 'Please enter a valid date.';
+            dobErrorMessage.style.display = 'block';
         }
 
         if (isValid) {
-            // Store the date of birth
+            const dateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
             data.driver.dateOfBirth = dateString;
-
-            // Show the done icon
             dobDoneIcon.style.display = 'inline-block';
-
-            // Proceed to display the driver questions
             showDriverQuestions();
         } else {
-            // Hide the done icon and next step button
             dobDoneIcon.style.display = 'none';
-            nextStepButtonDrivers.classList.remove('show');
+            nextStepButtonDrivers.style.display = 'none';
         }
     }
 
     // Event listeners for DOB inputs
     [dobMonth, dobDay, dobYear].forEach(input => {
         input.addEventListener('input', validateDOB);
-
-        // Restrict input to numbers only
         input.addEventListener('keypress', (e) => {
             if (!/[0-9]/.test(e.key)) {
                 e.preventDefault();
             }
         });
     });
+
+    // Function to validate a date
+    function validateDate(month, day, year) {
+        const monthInt = parseInt(month, 10);
+        const dayInt = parseInt(day, 10);
+        const yearInt = parseInt(year, 10);
+
+        const date = new Date(yearInt, monthInt - 1, dayInt);
+
+        const today = new Date();
+        return (
+            date.getFullYear() === yearInt &&
+            date.getMonth() + 1 === monthInt &&
+            date.getDate() === dayInt &&
+            date <= today
+        );
+    }
 
     // Function to show driver questions
     function showDriverQuestions() {
@@ -165,11 +167,9 @@
             .then(driverQuestionsData => {
                 const driverQuestionsContainer = document.createElement('div');
                 driverQuestionsContainer.id = 'driver-questions-container';
-
-                // Append to the Drivers stage
+                driverQuestionsContainer.classList.add('form-container', 'bg-white', 'p-10');
                 stageDrivers.appendChild(driverQuestionsContainer);
 
-                // Iterate through each question
                 driverQuestionsData.questions.forEach((question, index) => {
                     const questionWrapper = document.createElement('div');
                     questionWrapper.classList.add('question-step');
@@ -183,7 +183,6 @@
                     const optionsContainer = document.createElement('div');
                     optionsContainer.classList.add('question-options');
 
-                    // Create options based on question type
                     if (question.type === 'radio') {
                         createRadioOptions(question, optionsContainer, questionTitle, index);
                     } else if (question.type === 'dropdown') {
@@ -197,15 +196,13 @@
                     driverQuestionsContainer.appendChild(questionWrapper);
                 });
 
-                // Show the first question
                 const firstQuestion = driverQuestionsContainer.querySelector('.question-step');
                 if (firstQuestion) {
                     firstQuestion.classList.add('active');
                     scrollToElement(firstQuestion);
                 }
 
-                // Hide the Next Step button initially
-                nextStepButtonDrivers.classList.remove('show');
+                nextStepButtonDrivers.style.display = 'none';
             })
             .catch(error => {
                 console.error('Error fetching driver questions:', error);
@@ -224,39 +221,33 @@
             input.name = `question_${question.id}`;
             input.value = choice;
 
-            const radioCircle = document.createElement('span');
-            radioCircle.classList.add('radio-circle');
-            optionWrapper.appendChild(input);
-            optionWrapper.appendChild(radioCircle);
-
             const label = document.createElement('span');
             label.classList.add('radio-label');
             label.textContent = choice;
+
+            optionWrapper.appendChild(input);
             optionWrapper.appendChild(label);
 
             optionsContainer.appendChild(optionWrapper);
 
-            // Event listener
             input.addEventListener('change', () => {
                 const radioButtons = optionsContainer.querySelectorAll(`input[name="question_${question.id}"]`);
                 radioButtons.forEach(rb => rb.parentElement.classList.remove('selected'));
                 optionWrapper.classList.add('selected');
                 questionTitle.querySelector('.done-icon').style.display = 'inline-block';
-
-                // Store the answer
-                data.driver[`question_${question.id}`] = input.value;
-
-                // Show next question or Next Step button
-                showNextDriverQuestion(currentIndex);
+                data.driver[question.key] = input.value;
+                showNextDriverQuestion(currentIndex, question);
             });
         });
     }
 
     function createDropdownOptions(question, optionsContainer, questionTitle, currentIndex) {
-        const select = document.createElement('select');
-        select.classList.add('dropdown-select');
+        const selectWrapper = document.createElement('div');
+        selectWrapper.classList.add('custom-dropdown');
 
-        // Placeholder option
+        const select = document.createElement('select');
+        select.classList.add('form-select');
+
         const placeholderOption = document.createElement('option');
         placeholderOption.value = '';
         placeholderOption.textContent = 'Select an option';
@@ -269,18 +260,14 @@
             select.appendChild(option);
         });
 
-        optionsContainer.appendChild(select);
+        selectWrapper.appendChild(select);
+        optionsContainer.appendChild(selectWrapper);
 
-        // Event listener
         select.addEventListener('change', () => {
             if (select.value) {
                 questionTitle.querySelector('.done-icon').style.display = 'inline-block';
-
-                // Store the answer
-                data.driver[`question_${question.id}`] = select.value;
-
-                // Show next question or Next Step button
-                showNextDriverQuestion(currentIndex);
+                data.driver[question.key] = select.value;
+                showNextDriverQuestion(currentIndex, question);
             }
         });
     }
@@ -295,11 +282,19 @@
         dateMonth.maxLength = 2;
         dateMonth.classList.add('dob-input');
 
+        const separator1 = document.createElement('span');
+        separator1.classList.add('text-lg', 'text-gray-400');
+        separator1.textContent = '/';
+
         const dateDay = document.createElement('input');
         dateDay.type = 'text';
         dateDay.placeholder = 'DD';
         dateDay.maxLength = 2;
         dateDay.classList.add('dob-input');
+
+        const separator2 = document.createElement('span');
+        separator2.classList.add('text-lg', 'text-gray-400');
+        separator2.textContent = '/';
 
         const dateYear = document.createElement('input');
         dateYear.type = 'text';
@@ -308,17 +303,20 @@
         dateYear.classList.add('dob-input');
 
         dateInputContainer.appendChild(dateMonth);
-        dateInputContainer.appendChild(document.createTextNode('/'));
+        dateInputContainer.appendChild(separator1);
         dateInputContainer.appendChild(dateDay);
-        dateInputContainer.appendChild(document.createTextNode('/'));
+        dateInputContainer.appendChild(separator2);
         dateInputContainer.appendChild(dateYear);
 
         optionsContainer.appendChild(dateInputContainer);
 
-        // Event listeners
+        const dateErrorMessage = document.createElement('div');
+        dateErrorMessage.classList.add('error-message');
+        dateErrorMessage.style.display = 'none';
+        optionsContainer.appendChild(dateErrorMessage);
+
         [dateMonth, dateDay, dateYear].forEach(input => {
             input.addEventListener('input', () => {
-                // Auto-advance focus
                 if (input.value.length === input.maxLength) {
                     if (input === dateMonth) {
                         dateDay.focus();
@@ -327,23 +325,36 @@
                     }
                 }
 
-                // Validate date
                 if (dateMonth.value && dateDay.value && dateYear.value) {
-                    const dateIsValid = validateDate(dateMonth.value, dateDay.value, dateYear.value);
+                    let dateIsValid = validateDate(dateMonth.value, dateDay.value, dateYear.value);
+                    if (dateIsValid) {
+                        // Additional validation for date of accident being within past 3 years
+                        const accidentDate = new Date(dateYear.value, parseInt(dateMonth.value, 10) - 1, dateDay.value);
+                        const today = new Date();
+                        const pastThreeYears = new Date();
+                        pastThreeYears.setFullYear(today.getFullYear() - 3);
+
+                        if (accidentDate < pastThreeYears || accidentDate > today) {
+                            dateIsValid = false;
+                            dateErrorMessage.textContent = 'Date of accident must be within the past 3 years.';
+                            dateErrorMessage.style.display = 'block';
+                        } else {
+                            dateErrorMessage.style.display = 'none';
+                        }
+                    } else {
+                        dateErrorMessage.textContent = 'Please enter a valid date.';
+                        dateErrorMessage.style.display = 'block';
+                    }
+
                     if (dateIsValid) {
                         questionTitle.querySelector('.done-icon').style.display = 'inline-block';
-
-                        // Store the date
                         const dateString = `${dateYear.value}-${dateMonth.value.padStart(2, '0')}-${dateDay.value.padStart(2, '0')}`;
-                        data.driver[`question_${question.id}`] = dateString;
-
-                        // Show next question or Next Step button
-                        showNextDriverQuestion(currentIndex);
+                        data.driver[question.key] = dateString;
+                        showNextDriverQuestion(currentIndex, question);
                     }
                 }
             });
 
-            // Restrict input to numbers only
             input.addEventListener('keypress', (e) => {
                 if (!/[0-9]/.test(e.key)) {
                     e.preventDefault();
@@ -352,58 +363,44 @@
         });
     }
 
-    // Function to validate a date
-    function validateDate(month, day, year) {
-        const monthRegex = /^(0?[1-9]|1[0-2])$/;
-        const dayRegex = /^(0?[1-9]|[12][0-9]|3[01])$/;
-        const yearRegex = /^(19|20)\d{2}$/;
+    // Function to show the next driver question
+    function showNextDriverQuestion(currentIndex, currentQuestion) {
+        const driverQuestionsContainer = document.getElementById('driver-questions-container');
+        let nextIndex = currentIndex + 1;
 
-        if (!monthRegex.test(month) || !dayRegex.test(day) || !yearRegex.test(year)) {
-            return false;
+        // Conditional logic: Skip or show questions based on previous answers
+        if (currentQuestion.key === 'incidents_last_3_years') {
+            if (data.driver['incidents_last_3_years'] === 'No') {
+                nextIndex = driverQuestionsContainer.querySelectorAll('.question-step').length; // Skip to the end
+            }
         }
 
-        const dateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-        const date = new Date(dateString);
-
-        return (
-            date.getFullYear() === parseInt(year) &&
-            date.getMonth() + 1 === parseInt(month) &&
-            date.getDate() === parseInt(day)
-        );
-    }
-
-    // Function to show the next driver question
-    function showNextDriverQuestion(currentIndex) {
-        const driverQuestionsContainer = document.getElementById('driver-questions-container');
-        const nextQuestion = driverQuestionsContainer.querySelector(`[data-step="${currentIndex + 1}"]`);
+        const nextQuestion = driverQuestionsContainer.querySelector(`[data-step="${nextIndex}"]`);
 
         if (nextQuestion) {
             nextQuestion.classList.add('active');
             scrollToElement(nextQuestion);
         } else {
-            // All questions answered, show the Next Step button
-            nextStepButtonDrivers.classList.add('show');
+            nextStepButtonDrivers.style.display = 'block';
             scrollToElement(nextStepButtonDrivers);
         }
     }
 
     // Function to scroll to a specific element smoothly
-    function scrollToElement(element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Ensure this function is not declared multiple times
+    // If not already declared, define it here
+    if (typeof scrollToElement !== 'function') {
+        function scrollToElement(element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     }
 
     // Next Step Button Click Handler for Drivers Stage
     nextStepButtonDrivers.addEventListener('click', () => {
-        // Update the navigation bar
         navDrivers.classList.add('active');
-        navIconDrivers.style.display = 'inline'; // Show done icon
-
-        // Proceed to the next stage (e.g., Final Details)
-        // For now, we'll log the collected data
+        navIconDrivers.style.display = 'inline';
         console.log('Collected Data:', JSON.stringify(data, null, 2));
-
-        // Show the next stage (implement similar to previous stages)
-        // showStage('final-details');
+        // showStage('final-details'); // Uncomment when implementing the next stage
     });
 
 })();
