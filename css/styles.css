@@ -32,10 +32,6 @@
     margin-right: 10px;
 }
 
-.done-icon::after {
-    content: '✔';
-}
-
 /* Form group layout for alignment */
 .form-group {
     margin-bottom: 1.2rem;
@@ -316,3 +312,62 @@ select.form-select {
     background-size: 10px 5px;
 }
 
+/* Hide all questions by default */
+.question-step {
+    display: none;
+}
+
+/* Display active questions */
+.question-step.active {
+    display: block;
+}
+
+/* Display completed questions */
+.question-step.completed {
+    display: block;
+    opacity: 0.8; /* Slightly dimmed to indicate completion */
+}
+
+.question-step.active .question-title {
+    font-weight: bold;
+    color: #1D4ED8; /* Example: blue color */
+}
+
+
+
+.address-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.address-input-wrapper {
+    margin-bottom: 10px;
+}
+
+.address-input-wrapper input,
+.address-input-wrapper select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.address-input-wrapper:nth-child(1) {
+    grid-column: 1 / -1;
+}
+
+.address-input-wrapper:nth-child(2) {
+    grid-column: 1 / 2;
+}
+
+@media (max-width: 768px) {
+    .address-container {
+        grid-template-columns: 1fr;
+    }
+
+    .address-input-wrapper:nth-child(2) {
+        grid-column: 1 / -1;
+    }
+}

@@ -25,6 +25,89 @@
     // If scrollToElement is defined in main.js and added to window object
     // We can use it directly without re-declaring
 
+
+    // Function to create radio or dropdown options
+function createOptions(question, optionsContainer) {
+    if (question.type === 'radio') {
+        question.choices.forEach(choice => {
+            const optionWrapper = document.createElement('label');
+            optionWrapper.classList.add('radio-button');
+
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = `question_${question.id}`;
+            input.value = choice;
+
+            const label = document.createElement('span');
+            label.classList.add('radio-label');
+            label.textContent = choice;
+
+            optionWrapper.appendChild(input);
+            optionWrapper.appendChild(label);
+            optionsContainer.appendChild(optionWrapper);
+
+            // Add event listener to highlight the selected option
+            input.addEventListener('change', () => {
+                optionsContainer.querySelectorAll('.radio-button').forEach(rb => rb.classList.remove('selected'));
+                optionWrapper.classList.add('selected');
+                // Save the selected value to data object
+                window.data.finalDetails[question.key] = input.value;
+                checkNextQuestion();
+            });
+        });
+    } else if (question.type === 'dropdown') {
+        const select = document.createElement('select');
+        select.classList.add('form-select');
+        select.name = `question_${question.id}`;
+
+        question.choices.forEach(choice => {
+            const option = document.createElement('option');
+            option.value = choice;
+            option.textContent = choice;
+            select.appendChild(option);
+        });
+
+        optionsContainer.appendChild(select);
+
+        // Add event listener for the dropdown selection
+        select.addEventListener('change', () => {
+            // Save the selected value to data object
+            window.data.finalDetails[question.key] = select.value;
+            checkNextQuestion();
+        });
+    }
+}
+
+
+// Helper function to check and show the next question or button
+function checkNextQuestion() {
+    const activeQuestion = document.querySelector('.question-step.active');
+    const nextQuestion = activeQuestion.nextElementSibling;
+    if (nextQuestion && nextQuestion.classList.contains('question-step')) {
+        nextQuestion.classList.add('active');
+        scrollToElement(nextQuestion);
+    } else {
+        // If no next question, show the submit button
+        document.getElementById('next-step-button-final-details').style.display = 'block';
+        scrollToElement(document.getElementById('next-step-button-final-details'));
+    }
+}
+// Function to create a text input field
+function createTextInput(question, optionsContainer) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.name = `question_${question.id}`;
+    input.placeholder = question.question;
+    input.classList.add('form-control', 'text-input');
+
+    optionsContainer.appendChild(input);
+
+    input.addEventListener('input', () => {
+        // Save the entered text value to the data object
+        window.data.finalDetails[question.key] = input.value;
+    });
+}
+
     // Function to validate name inputs
     function validateName() {
         const firstName = firstNameInput.value.trim();
@@ -363,28 +446,101 @@
         });
     }
 
-    // Function to show the next driver question
-    function showNextDriverQuestion(currentIndex, currentQuestion) {
-        const driverQuestionsContainer = document.getElementById('driver-questions-container');
-        let nextIndex = currentIndex + 1;
 
-        // Conditional logic: Skip or show questions based on previous answers
-        if (currentQuestion.key === 'incidents_last_3_years') {
-            if (data.driver['incidents_last_3_years'] === 'No') {
-                nextIndex = driverQuestionsContainer.querySelectorAll('.question-step').length; // Skip to the end
+    // details.js
+
+// Function to load the details questions dynamically from JSON file
+function loadDetailsQuestions() {
+    fetch('details-questions.json')
+        .then(response => response.json())
+        .then(data => {
+            const questionsContainer = document.getElementById('questions-container');
+            questionsContainer.innerHTML = ''; // Clear existing content
+
+            data.questions.forEach((question, index) => {
+                const questionWrapper = document.createElement('div');
+                questionWrapper.classList.add('form-group', 'question-step');
+                questionWrapper.setAttribute('data-step', index);
+
+                const questionTitle = document.createElement('h2');
+                questionTitle.classList.add('question-title');
+                questionTitle.textContent = question.question;
+
+                const optionsContainer = document.createElement('div');
+                optionsContainer.classList.add('question-options');
+
+                // Determine the question type and call the appropriate function
+                if (question.type === 'radio' || question.type === 'dropdown') {
+                    createOptions(question, optionsContainer); // For radio and dropdown
+                } else if (question.type === 'text') {
+                    createTextInput(question, optionsContainer); // For text inputs
+                }
+
+                questionWrapper.appendChild(questionTitle);
+                questionWrapper.appendChild(optionsContainer);
+                questionsContainer.appendChild(questionWrapper);
+
+                if (index === data.questions.length - 1) {
+                    document.getElementById('next-step-button-final-details').style.display = 'block';
+                }
+            });
+
+            // Show the first question with animation
+            const firstQuestion = document.querySelector('.question-step');
+            if (firstQuestion) {
+                firstQuestion.classList.add('active');
+                scrollToElement(firstQuestion);
             }
-        }
+        })
+        .catch(error => {
+            console.error('Error loading questions:', error);
+        });
+}
 
-        const nextQuestion = driverQuestionsContainer.querySelector(`[data-step="${nextIndex}"]`);
+// Call the function when the final details stage is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    loadDetailsQuestions();
+});
 
-        if (nextQuestion) {
-            nextQuestion.classList.add('active');
-            scrollToElement(nextQuestion);
-        } else {
-            nextStepButtonDrivers.style.display = 'block';
-            scrollToElement(nextStepButtonDrivers);
+
+// Call this function when final details stage is loaded
+window.addEventListener('DOMContentLoaded', () => {
+    loadDetailsQuestions();
+});
+
+
+
+    // Function to show the next driver question
+function showNextDriverQuestion(currentIndex, currentQuestion) {
+    const driverQuestionsContainer = document.getElementById('driver-questions-container');
+    let nextIndex = currentIndex + 1;
+
+    if (currentQuestion.key === 'incidents_last_3_years') {
+        // Check if incidents happened in the last 3 years
+        if (data.driver['incidents_last_3_years'] === 'No') {
+            // Skip incident-related questions if no incidents occurred
+            nextIndex = driverQuestionsContainer.querySelector(`[data-id="12"]`).dataset.step; // Jump to second driver
         }
     }
+
+    if (currentQuestion.key === 'incident_type') {
+        // Modify the label for "Date of Accident" based on the selected incident type
+        const incidentType = data.driver['incident_type'];
+        const dateOfAccidentLabel = document.querySelector('label[for="date_of_accident"]');
+        dateOfAccidentLabel.textContent = `Date of ${incidentType}`;
+    }
+
+    const nextQuestion = driverQuestionsContainer.querySelector(`[data-step="${nextIndex}"]`);
+
+    if (nextQuestion) {
+        nextQuestion.classList.add('active');
+        scrollToElement(nextQuestion);
+    } else {
+        nextStepButtonDrivers.style.display = 'block';
+        scrollToElement(nextStepButtonDrivers);
+    }
+}
+
 
     // Function to scroll to a specific element smoothly
     // Ensure this function is not declared multiple times

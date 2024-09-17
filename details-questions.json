@@ -1,0 +1,133 @@
+{
+    "questions": [
+      {
+        "id": 1,
+        "key": "has_car_insurance",
+        "question": "Do you currently have car insurance?",
+        "type": "radio",
+        "choices": ["Yes", "No"]
+      },
+      {
+        "id": 2,
+        "key": "insurance_company",
+        "question": "What company are you insured with?",
+        "type": "dropdown",
+        "choices": [
+          "21st Century Insurance",
+          "AAA Insurance Co.",
+          "Allstate",
+          "American Family",
+          "AMICA",
+          "Country Financial",
+          "Esurance",
+          "Farmers",
+          "Geico",
+          "Liberty Mutual",
+          "Mercury",
+          "Metlife",
+          "Nationwide",
+          "Progressive",
+          "Safeco",
+          "State Farm",
+          "The Hartford",
+          "Travelers",
+          "USAA",
+          "Other"
+        ]
+      },
+      {
+        "id": 3,
+        "key": "insurance_duration",
+        "question": "How long have you been with American Family?",
+        "type": "radio",
+        "choices": ["Less than a year", "1-3 years", "3-5 years", "5+ years"]
+      },
+      {
+        "id": 4,
+        "key": "policy_expiry",
+        "question": "When does your policy expire?",
+        "type": "radio",
+        "choices": ["No idea", "3 months", "6 months", "9 months", "12 months"]
+      },
+      {
+        "id": 5,
+        "key": "coverage",
+        "question": "How much coverage do you need?",
+        "type": "radio",
+        "choices": [
+          "State Minimum",
+          "Standard (50/100/50)",
+          "Superior (100/300/100)"
+        ]
+      },
+      {
+        "id": 6,
+        "key": "military_family",
+        "question": "Have you or anyone in your family served in the military?",
+        "type": "radio",
+        "choices": ["Yes", "No"]
+      },
+      {
+        "id": 7,
+        "key": "home_ownership",
+        "question": "Do you own or rent your home?",
+        "type": "radio",
+        "choices": ["Own", "Rent"]
+      },
+      {
+        "id": 8,
+        "key": "home_type",
+        "question": "What type of home do you live in?",
+        "type": "radio",
+        "choices": [
+          "Single Family Home",
+          "Multi-Family Home",
+          "Duplex",
+          "Apartment",
+          "Condo",
+          "Mobile Home"
+        ]
+      },
+      {
+        "id": 9,
+        "key": "address",
+        "question": "Last question, what is your address?",
+        "type": "address",
+        "subfields": [
+          {
+            "key": "street",
+            "type": "text",
+            "placeholder": "Street address"
+          },
+          {
+            "key": "unit",
+            "type": "text",
+            "placeholder": "Unit #"
+          },
+          {
+            "key": "city",
+            "type": "text",
+            "placeholder": "City"
+          },
+          {
+            "key": "state",
+            "type": "dropdown",
+            "placeholder": "State",
+            "choices": [
+              "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+              "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+              "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+              "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+              "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+            ]
+          },
+          {
+            "key": "zipcode",
+            "type": "text",
+            "placeholder": "Zip code"
+          }
+        ]
+      }
+    ]
+  }
+  
