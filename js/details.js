@@ -11,53 +11,39 @@
 
     let currentQuestionIndex = 0;
 
-    /**
-     * Load the final details questions from the JSON file.
-     */
     function loadDetailsQuestions() {
-        // Only load questions if the Final Details stage is visible
-        if (stageFinalDetails.style.display === 'block') {
-            fetch('details-questions.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(questionsData => {
-                    detailsQuestionsContainer.innerHTML = ''; // Clear existing content
-                    questionsData.questions.forEach((question, index) => {
-                        const questionWrapper = createQuestionElement(question, index);
-                        detailsQuestionsContainer.appendChild(questionWrapper);
-                    });
-                    showQuestion(0); // Show the first question
-                })
-                .catch(error => {
-                    console.error('Error loading questions:', error);
-                    alert('Failed to load questions. Please try again later.');
+        fetch('details-questions.json')
+            .then(response => response.json())
+            .then(questionsData => {
+                detailsQuestionsContainer.innerHTML = ''; // Clear existing content
+                questionsData.questions.forEach((question, index) => {
+                    const questionWrapper = createQuestionElement(question, index);
+                    detailsQuestionsContainer.appendChild(questionWrapper);
                 });
-        }
+                showQuestion(0); // Show only the first question initially
+            })
+            .catch(error => {
+                console.error('Error loading questions:', error);
+                alert('Failed to load questions. Please try again later.');
+            });
     }
 
-    /**
-     * Create a question element based on its type.
-     * @param {Object} question - The question data.
-     * @param {number} index - The question index.
-     * @returns {HTMLElement} The question wrapper element.
-     */
+    
+
+
     function createQuestionElement(question, index) {
         const questionWrapper = document.createElement('div');
         questionWrapper.classList.add('form-group', 'question-step', 'inactive');
         questionWrapper.setAttribute('data-step', index);
+        questionWrapper.style.display = 'none'; // Hide all questions initially
 
         const questionTitle = document.createElement('h2');
-        questionTitle.classList.add('question-title');
+        questionTitle.classList.add('question-title', 'text-xl', 'font-bold', 'mb-4');
         questionTitle.innerHTML = `<div class="done-icon" style="display: none;">✔</div> ${question.question}`;
 
         const optionsContainer = document.createElement('div');
         optionsContainer.classList.add('question-options');
 
-        // Create options based on question type
         if (question.type === 'address') {
             createAddressFields(question, optionsContainer, questionWrapper, index);
         } else if (question.type === 'radio' || question.type === 'dropdown') {
@@ -72,248 +58,281 @@
         return questionWrapper;
     }
 
-   /**
- * Create address fields for the address question type.
- * @param {Object} question - The question data.
- * @param {HTMLElement} optionsContainer - The container for options.
- * @param {HTMLElement} questionWrapper - The question wrapper element.
- * @param {number} index - The question index.
- */
-function createAddressFields(question, optionsContainer, questionWrapper, index) {
-    const addressContainer = document.createElement('div');
-    addressContainer.classList.add('address-container');
+    function createAddressFields(question, optionsContainer, questionWrapper, index) {
+        const addressContainer = document.createElement('div');
+        addressContainer.classList.add('address-container', 'grid', 'grid-cols-2', 'gap-4');
 
-    // Define which subfields are required
-    const requiredFields = ['street', 'city', 'state', 'zip']; // 'unit' is optional
+        const requiredFields = ['street', 'city', 'state', 'zip'];
 
-    question.subfields.forEach(subfield => {
-        const inputWrapper = document.createElement('div');
-        inputWrapper.classList.add('address-input-wrapper');
+        question.subfields.forEach(subfield => {
+            const inputWrapper = document.createElement('div');
+            inputWrapper.classList.add('address-input-wrapper');
 
-        if (subfield.type === 'dropdown') {
-            const select = document.createElement('select');
-            select.classList.add('form-select');
-            select.name = `address_${subfield.key}`;
-            select.id = `address_${subfield.key}`;
+            if (subfield.type === 'dropdown') {
+                const select = document.createElement('select');
+                select.classList.add('form-select', 'w-full', 'p-2', 'border', 'rounded');
+                select.name = `address_${subfield.key}`;
+                select.id = `address_${subfield.key}`;
 
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-            defaultOption.textContent = subfield.placeholder;
-            select.appendChild(defaultOption);
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = subfield.placeholder;
+                select.appendChild(defaultOption);
 
-            subfield.choices.forEach(choice => {
-                const option = document.createElement('option');
-                option.value = choice;
-                option.textContent = choice;
-                select.appendChild(option);
-            });
+                subfield.choices.forEach(choice => {
+                    const option = document.createElement('option');
+                    option.value = choice;
+                    option.textContent = choice;
+                    select.appendChild(option);
+                });
 
-            inputWrapper.appendChild(select);
-        } else {
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.name = `address_${subfield.key}`;
-            input.id = `address_${subfield.key}`;
-            input.placeholder = subfield.placeholder;
-            input.classList.add('form-control', 'text-input');
-
-            inputWrapper.appendChild(input);
-        }
-
-        addressContainer.appendChild(inputWrapper);
-    });
-
-    optionsContainer.appendChild(addressContainer);
-
-    /**
-     * Event listener to check if all required fields are filled.
-     * 'unit' field is optional and will be ignored in the validation.
-     */
-    addressContainer.addEventListener('input', () => {
-        // Select all input and select elements within the address container
-        const inputs = [...addressContainer.querySelectorAll('input, select')];
-
-        // Filter out the 'unit' field as it's optional
-        const requiredInputs = inputs.filter(input => {
-            const fieldKey = input.name.replace('address_', '');
-            return requiredFields.includes(fieldKey);
-        });
-
-        // Check if all required fields are filled
-        const allRequiredFilled = requiredInputs.every(input => input.value.trim() !== '');
-
-        if (allRequiredFilled) {
-            // Assign each required subfield value individually
-            question.subfields.forEach(subfield => {
-                const inputElement = document.getElementById(`address_${subfield.key}`);
-                if (inputElement) {
-                    // Prefix the key to maintain uniqueness
-                    data.finalDetails[`address_${subfield.key}`] = inputElement.value.trim();
-                }
-            });
-
-            // Optionally, assign the optional 'unit' field if it's filled
-            const unitInput = document.getElementById(`address_unit`);
-            if (unitInput && unitInput.value.trim() !== '') {
-                data.finalDetails['address_unit'] = unitInput.value.trim();
+                inputWrapper.appendChild(select);
             } else {
-                // Ensure the key is undefined or removed if not filled
-                delete data.finalDetails['address_unit'];
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = `address_${subfield.key}`;
+                input.id = `address_${subfield.key}`;
+                input.placeholder = subfield.placeholder;
+                input.classList.add('form-control', 'text-input', 'w-full', 'p-2', 'border', 'rounded');
+
+                inputWrapper.appendChild(input);
             }
 
-            // Show the done icon
-            questionWrapper.querySelector('.done-icon').style.display = 'inline-block';
-            // Mark this question as completed
-            markQuestionAsCompleted(questionWrapper);
-            // Show the next question
-            showNextQuestion(index);
-        }
-    });
-}
-
-
-    /**
-     * Create radio buttons or dropdown options for a question.
-     * @param {Object} question - The question data.
-     * @param {HTMLElement} optionsContainer - The container for options.
-     * @param {HTMLElement} questionWrapper - The question wrapper element.
-     * @param {number} index - The question index.
-     */
-    function createOptions(question, optionsContainer, questionWrapper, index) {
-        if (question.type === 'radio') {
-            question.choices.forEach(choice => {
-                const optionWrapper = document.createElement('label');
-                optionWrapper.classList.add('radio-button');
-
-                const input = document.createElement('input');
-                input.type = 'radio';
-                input.name = `question_${question.id}`;
-                input.value = choice;
-
-                const labelText = document.createElement('span');
-                labelText.classList.add('radio-label');
-                labelText.textContent = choice;
-
-                optionWrapper.appendChild(input);
-                optionWrapper.appendChild(labelText);
-                optionsContainer.appendChild(optionWrapper);
-
-                // Event listener for radio button selection
-                input.addEventListener('change', () => {
-                    // Remove 'selected' from all options
-                    optionsContainer.querySelectorAll('.radio-button').forEach(rb => rb.classList.remove('selected'));
-                    // Add 'selected' to the chosen option
-                    optionWrapper.classList.add('selected');
-                    // Show the done icon
-                    questionWrapper.querySelector('.done-icon').style.display = 'inline-block';
-                    // Save the answer
-                    data.finalDetails[question.key] = input.value;
-                    // Mark this question as completed
-                    markQuestionAsCompleted(questionWrapper);
-                    // Show the next question
-                    showNextQuestion(index);
-                });
-            });
-        } else if (question.type === 'dropdown') {
-            const select = document.createElement('select');
-            select.classList.add('form-select');
-            select.name = `question_${question.id}`;
-
-            // Add a default placeholder option
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-            defaultOption.textContent = 'Please select an option';
-            select.appendChild(defaultOption);
-
-            // Add options from the question data
-            question.choices.forEach(choice => {
-                const option = document.createElement('option');
-                option.value = choice;
-                option.textContent = choice;
-                select.appendChild(option);
-            });
-
-            optionsContainer.appendChild(select);
-
-            // Event listener for dropdown selection
-            select.addEventListener('change', () => {
-                if (select.value !== '') {
-                    // Save the answer
-                    data.finalDetails[question.key] = select.value;
-                    // Show the done icon
-                    questionWrapper.querySelector('.done-icon').style.display = 'inline-block';
-                    // Mark this question as completed
-                    markQuestionAsCompleted(questionWrapper);
-                    // Show the next question
-                    showNextQuestion(index);
-                }
-            });
-        }
-    }
-
-    /**
-     * Create a text input field for a question.
-     * @param {Object} question - The question data.
-     * @param {HTMLElement} optionsContainer - The container for the input.
-     * @param {HTMLElement} questionWrapper - The question wrapper element.
-     * @param {number} index - The question index.
-     */
-    function createTextInput(question, optionsContainer, questionWrapper, index) {
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.name = `question_${question.id}`;
-        input.placeholder = question.placeholder || question.question;
-        input.classList.add('form-control', 'text-input');
-
-        optionsContainer.appendChild(input);
-
-        // Event listener for input changes
-        input.addEventListener('input', () => {
-            data.finalDetails[question.key] = input.value;
+            addressContainer.appendChild(inputWrapper);
         });
 
-        // Event listener for when input loses focus
-        input.addEventListener('blur', () => {
-            if (input.value.trim() !== '') {
-                // Show the done icon
+        optionsContainer.appendChild(addressContainer);
+
+        addressContainer.addEventListener('input', () => {
+            const inputs = [...addressContainer.querySelectorAll('input, select')];
+            const requiredInputs = inputs.filter(input => {
+                const fieldKey = input.name.replace('address_', '');
+                return requiredFields.includes(fieldKey);
+            });
+
+            const allRequiredFilled = requiredInputs.every(input => input.value.trim() !== '');
+
+            if (allRequiredFilled) {
+                question.subfields.forEach(subfield => {
+                    const inputElement = document.getElementById(`address_${subfield.key}`);
+                    if (inputElement) {
+                        data.finalDetails[`address_${subfield.key}`] = inputElement.value.trim();
+                    }
+                });
+
+                const unitInput = document.getElementById(`address_unit`);
+                if (unitInput && unitInput.value.trim() !== '') {
+                    data.finalDetails['address_unit'] = unitInput.value.trim();
+                } else {
+                    delete data.finalDetails['address_unit'];
+                }
+
                 questionWrapper.querySelector('.done-icon').style.display = 'inline-block';
-                // Mark this question as completed
                 markQuestionAsCompleted(questionWrapper);
-                // Show the next question
+                showNextQuestion(index);
+                moveToNextQuestion();
+            }
+        });
+    }
+
+    function createOptions(question, optionsContainer, questionWrapper, index) {
+        if (question.key === 'coverage') {
+            createCoverageOptions(question, optionsContainer, questionWrapper, index);
+        } else if (question.type === 'radio') {
+            createRadioOptions(question, optionsContainer, questionWrapper, index);
+        } else if (question.type === 'dropdown') {
+            createDropdownOptions(question, optionsContainer, questionWrapper, index);
+        }
+    }
+    function createCoverageOptions(question, optionsContainer, questionWrapper, index) {
+        const coverageWrapper = document.createElement('div');
+        coverageWrapper.classList.add('coverage-options-wrapper', 'grid', 'grid-cols-2', 'gap-4', 'mt-4');
+    
+        const coverageOptions = [
+            { name: 'State Minimum', stars: 1, details: ['Bodily Injury Minimum', 'Property Damage Minimum'] },
+            { name: 'Basic', stars: 2, details: ['Bodily Injury $50K / $100K', 'Property Damage $50K'] },
+            { name: 'Standard', stars: 3, details: ['Bodily Injury $100K / $300K', 'Property Damage $100K'] },
+            { name: 'Superior', stars: 4, details: ['Bodily Injury $250K / $500K', 'Property Damage $250K'] }
+        ];
+    
+        coverageOptions.forEach((option) => {
+            const optionCard = document.createElement('label');
+            optionCard.classList.add('coverage-option', 'bg-gray-100', 'p-4', 'rounded-lg', 'cursor-pointer', 'hover:bg-gray-200', 'transition-colors');
+    
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = `question_${question.id}`;
+            input.value = option.name;
+            input.classList.add('hidden');
+    
+            const title = document.createElement('h3');
+            title.classList.add('font-bold', 'mb-2');
+            title.textContent = option.name;
+    
+            const stars = document.createElement('div');
+            stars.classList.add('stars', 'text-pink-500', 'mb-2');
+            stars.innerHTML = '★'.repeat(option.stars) + '☆'.repeat(4 - option.stars);
+    
+            const details = document.createElement('ul');
+            details.classList.add('text-sm', 'text-black-600');
+            option.details.forEach(detail => {
+                const li = document.createElement('li');
+                li.textContent = detail;
+                details.appendChild(li);
+            });
+    
+            optionCard.appendChild(input);
+            optionCard.appendChild(title);
+            optionCard.appendChild(stars);
+            optionCard.appendChild(details);
+    
+            optionCard.addEventListener('click', () => {
+                // Deselect all options
+                coverageWrapper.querySelectorAll('.coverage-option').forEach(card => {
+                    card.classList.remove('selected', 'bg-pink-100', 'border-pink-500');
+                    card.querySelector('input').checked = false;
+                });
+    
+                // Select this option
+                optionCard.classList.add('selected', 'bg-pink-100', 'border-pink-500');
+                input.checked = true;
+    
+                data.finalDetails[question.key] = input.value;
+                questionWrapper.querySelector('.done-icon').style.display = 'inline-block';
+                markQuestionAsCompleted(questionWrapper);
+                showNextQuestion(index);
+                
+            });
+    
+            coverageWrapper.appendChild(optionCard);
+        });
+    
+        const description = document.createElement('p');
+        description.classList.add('text-sm', 'text-gray-500', 'mt-2', 'col-span-2');
+        description.textContent = 'Most drivers select Standard. You can change it later if you want.';
+    
+        coverageWrapper.appendChild(description);
+        optionsContainer.appendChild(coverageWrapper);
+    }
+    
+    // Update the style element or add these styles to your CSS file
+    const style = document.createElement('style');
+    style.textContent = `
+        .coverage-option {
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .coverage-option:hover {
+            border-color: #ec4899;
+        }
+        .coverage-option.selected {
+            background-color: #ff0080;
+            border-color: #ec4899;
+        }
+    `;
+    document.head.appendChild(style);
+
+    function createRadioOptions(question, optionsContainer, questionWrapper, index) {
+        question.choices.forEach(choice => {
+            const optionWrapper = document.createElement('label');
+            optionWrapper.classList.add('radio-button', 'block', 'mb-2');
+
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = `question_${question.id}`;
+            input.value = choice;
+            input.classList.add('mr-2');
+
+            const label = document.createElement('span');
+            label.classList.add('radio-label');
+            label.textContent = choice;
+
+            optionWrapper.appendChild(input);
+            optionWrapper.appendChild(label);
+            optionsContainer.appendChild(optionWrapper);
+
+            input.addEventListener('change', () => {
+                optionsContainer.querySelectorAll('.radio-button').forEach(rb => rb.classList.remove('selected'));
+                optionWrapper.classList.add('selected');
+                data.finalDetails[question.key] = input.value;
+                questionWrapper.querySelector('.done-icon').style.display = 'inline-block';
+                markQuestionAsCompleted(questionWrapper);
+                showNextQuestion(index);
+                moveToNextQuestion();
+            });
+        });
+    }
+
+    function createDropdownOptions(question, optionsContainer, questionWrapper, index) {
+        const select = document.createElement('select');
+        select.classList.add('form-select', 'w-full', 'p-2', 'border', 'rounded');
+        select.name = `question_${question.id}`;
+
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Please select an option';
+        select.appendChild(defaultOption);
+
+        question.choices.forEach(choice => {
+            const option = document.createElement('option');
+            option.value = choice;
+            option.textContent = choice;
+            select.appendChild(option);
+        });
+
+        optionsContainer.appendChild(select);
+
+        select.addEventListener('change', () => {
+            if (select.value !== '') {
+                data.finalDetails[question.key] = select.value;
+                questionWrapper.querySelector('.done-icon').style.display = 'inline-block';
+                markQuestionAsCompleted(questionWrapper);
                 showNextQuestion(index);
             }
         });
     }
 
-    /**
-     * Mark a question as completed by updating its classes.
-     * @param {HTMLElement} questionWrapper - The question wrapper element.
-     */
+    function createTextInput(question, optionsContainer, questionWrapper, index) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = `question_${question.id}`;
+        input.placeholder = question.placeholder || '';
+        input.classList.add('form-control', 'text-input', 'w-full', 'p-2', 'border', 'rounded');
+
+        optionsContainer.appendChild(input);
+
+        input.addEventListener('input', () => {
+            data.finalDetails[question.key] = input.value;
+        });
+
+        input.addEventListener('blur', () => {
+            if (input.value.trim() !== '') {
+                questionWrapper.querySelector('.done-icon').style.display = 'inline-block';
+                markQuestionAsCompleted(questionWrapper);
+                showNextQuestion(index);
+                moveToNextQuestion();
+            }
+        });
+    }
+
     function markQuestionAsCompleted(questionWrapper) {
         questionWrapper.classList.add('completed');
         questionWrapper.classList.remove('active');
     }
 
-    /**
-     * Display a specific question based on its index.
-     * @param {number} index - The question index to display.
-     */
     function showQuestion(index) {
         const questions = detailsQuestionsContainer.querySelectorAll('.question-step');
         questions.forEach((q, i) => {
             if (i < index) {
-                // Previous questions: mark as completed and ensure they are visible
                 q.classList.add('completed');
                 q.classList.remove('active');
                 q.style.display = 'block';
             } else if (i === index) {
-                // Current question: mark as active and ensure it is visible
                 q.classList.add('active');
                 q.classList.remove('completed');
                 q.style.display = 'block';
                 focusOnQuestion(q);
             } else {
-                // Future questions: hide them
                 q.classList.remove('active');
                 q.classList.remove('completed');
                 q.style.display = 'none';
@@ -322,33 +341,22 @@ function createAddressFields(question, optionsContainer, questionWrapper, index)
         currentQuestionIndex = index;
     }
 
-    /**
-     * Show the next question based on the current index and conditional logic.
-     * @param {number} currentIndex - The index of the current question.
-     */
     function showNextQuestion(currentIndex) {
         const questions = detailsQuestionsContainer.querySelectorAll('.question-step');
         let nextIndex = currentIndex + 1;
 
-        // Implement conditional logic (e.g., skip questions based on answers)
         if (data.finalDetails.has_car_insurance === 'No' && nextIndex === 1) {
-            // Example: Skip to coverage question (Assuming coverage question is at index 4)
-            nextIndex = 4; // Adjust this value based on your actual questions order
+            nextIndex = 1;
         }
 
         if (nextIndex < questions.length) {
             showQuestion(nextIndex);
         } else {
-            // If no more questions, show the submit button
             nextStepButtonFinalDetails.style.display = 'block';
             scrollToElement(nextStepButtonFinalDetails);
         }
     }
 
-    /**
-     * Focus on the active question to improve user experience.
-     * @param {HTMLElement} questionElement - The question element to focus on.
-     */
     function focusOnQuestion(questionElement) {
         const inputElement = questionElement.querySelector('input, select');
         if (inputElement) {
@@ -357,38 +365,44 @@ function createAddressFields(question, optionsContainer, questionWrapper, index)
         questionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    /**
-     * Smoothly scroll to a specific element.
-     * @param {HTMLElement} element - The element to scroll to.
-     */
     function scrollToElement(element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    /**
-     * Event listener for the Submit button in the Final Details stage.
-     */
     nextStepButtonFinalDetails.addEventListener('click', (e) => {
         e.preventDefault();
         navFinalDetails.classList.add('active');
         navIconFinalDetails.style.display = 'inline';
-        
-        // Log the collected data as JSON in the console
-        console.log('Collected Data:', JSON.stringify(data.finalDetails, null, 2));
-
-        // Optionally, proceed to the next stage or handle form submission here
-        // For example:
-        // showStage('quotes');
+       // Combine all collected data from different stages
+    const collectedData = {
+        vehicle1: window.data.vehicle1,
+        answers1: window.data.answers1,
+        vehicle2: window.data.vehicle2 || {}, // If there's a second vehicle
+        answers2: window.data.answers2 || {}, // If there are second vehicle answers
+        driver: window.data.driver,
+        finalDetails: window.data.finalDetails
+    };
+    fetch('http://localhost/landing/submit_data.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(collectedData), // Send data as JSON
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response from the PHP page
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+    // Log the collected data to the console
+    console.log('All Collected Data:', JSON.stringify(collectedData, null, 2));
     });
 
-    /**
-     * Expose the loadDetailsQuestions function to the global scope.
-     */
     window.loadDetailsQuestions = loadDetailsQuestions;
 
-    /**
-     * Observe changes to the Final Details stage's visibility to load questions dynamically.
-     */
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
@@ -398,7 +412,6 @@ function createAddressFields(question, optionsContainer, questionWrapper, index)
             }
         });
     });
-
     observer.observe(stageFinalDetails, { attributes: true });
 
 })();

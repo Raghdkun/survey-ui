@@ -152,79 +152,87 @@ function createTextInput(question, optionsContainer) {
     });
 
     // Function to validate date of birth
-    function validateDOB() {
-        const month = dobMonth.value.trim();
-        const day = dobDay.value.trim();
-        const year = dobYear.value.trim();
+    // Modified function: validateDOB
+function validateDOB() {
+    const month = dobMonth.value.trim();
+    const day = dobDay.value.trim();
+    const year = dobYear.value.trim();
 
-        let isValid = true;
+    let isValid = true;
 
-        const monthRegex = /^(0?[1-9]|1[0-2])$/;
-        const dayRegex = /^(0?[1-9]|[12][0-9]|3[01])$/;
-        const yearRegex = /^(19|20)\d{2}$/;
+    const monthRegex = /^(0?[1-9]|1[0-2])$/;
+    const dayRegex = /^(0?[1-9]|[12][0-9]|3[01])$/;
+    const yearRegex = /^(19|20)\d{2}$/;
 
-        if (!monthRegex.test(month)) {
-            isValid = false;
-            dobMonth.classList.add('error');
-        } else {
-            dobMonth.classList.remove('error');
-        }
-
-        if (!dayRegex.test(day)) {
-            isValid = false;
-            dobDay.classList.add('error');
-        } else {
-            dobDay.classList.remove('error');
-        }
-
-        const currentYear = new Date().getFullYear();
-        if (!yearRegex.test(year) || parseInt(year) > currentYear) {
-            isValid = false;
-            dobYear.classList.add('error');
-        } else {
-            dobYear.classList.remove('error');
-        }
-
-        if (isValid) {
-            const dateIsValid = validateDate(month, day, year);
-            if (!dateIsValid) {
-                isValid = false;
-                dobMonth.classList.add('error');
-                dobDay.classList.add('error');
-                dobYear.classList.add('error');
-                dobErrorMessage.textContent = 'Please enter a valid date.';
-                dobErrorMessage.style.display = 'block';
-            } else {
-                dobMonth.classList.remove('error');
-                dobDay.classList.remove('error');
-                dobYear.classList.remove('error');
-                dobErrorMessage.style.display = 'none';
-            }
-        } else {
-            dobErrorMessage.textContent = 'Please enter a valid date.';
-            dobErrorMessage.style.display = 'block';
-        }
-
-        if (isValid) {
-            const dateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-            data.driver.dateOfBirth = dateString;
-            dobDoneIcon.style.display = 'inline-block';
-            showDriverQuestions();
-        } else {
-            dobDoneIcon.style.display = 'none';
-            nextStepButtonDrivers.style.display = 'none';
-        }
+    if (!monthRegex.test(month)) {
+        isValid = false;
+        dobMonth.classList.add('error');
+    } else {
+        dobMonth.classList.remove('error');
     }
 
-    // Event listeners for DOB inputs
-    [dobMonth, dobDay, dobYear].forEach(input => {
-        input.addEventListener('input', validateDOB);
-        input.addEventListener('keypress', (e) => {
-            if (!/[0-9]/.test(e.key)) {
-                e.preventDefault();
-            }
-        });
+    if (!dayRegex.test(day)) {
+        isValid = false;
+        dobDay.classList.add('error');
+    } else {
+        dobDay.classList.remove('error');
+    }
+
+    const currentYear = new Date().getFullYear();
+    if (!yearRegex.test(year) || parseInt(year) > currentYear) {
+        isValid = false;
+        dobYear.classList.add('error');
+    } else {
+        dobYear.classList.remove('error');
+    }
+
+    if (isValid) {
+        const dateIsValid = validateDate(month, day, year);
+        if (!dateIsValid) {
+            isValid = false;
+            dobMonth.classList.add('error');
+            dobDay.classList.add('error');
+            dobYear.classList.add('error');
+            dobErrorMessage.textContent = 'Please enter a valid date.';
+            dobErrorMessage.style.display = 'block';
+        } else {
+            dobMonth.classList.remove('error');
+            dobDay.classList.remove('error');
+            dobYear.classList.remove('error');
+            dobErrorMessage.style.display = 'none';
+        }
+    } else {
+        dobErrorMessage.textContent = 'Please enter a valid date.';
+        dobErrorMessage.style.display = 'block';
+    }
+
+    if (isValid) {
+        const dateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        data.driver.dateOfBirth = dateString;
+        dobDoneIcon.style.display = 'inline-block';
+        showDriverQuestions();
+    } else {
+        dobDoneIcon.style.display = 'none';
+        nextStepButtonDrivers.style.display = 'none';
+    }
+}
+
+// Modified event listeners for DOB inputs
+[dobMonth, dobDay, dobYear].forEach(input => {
+    input.addEventListener('input', (e) => {
+        if (e.target === dobMonth && dobMonth.value.length === 2) {
+            dobDay.focus();
+        } else if (e.target === dobDay && dobDay.value.length === 2) {
+            dobYear.focus();
+        }
+        validateDOB();
     });
+    input.addEventListener('keypress', (e) => {
+        if (!/[0-9]/.test(e.key)) {
+            e.preventDefault();
+        }
+    });
+});
 
     // Function to validate a date
     function validateDate(month, day, year) {

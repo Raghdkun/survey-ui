@@ -91,7 +91,10 @@
                 questionsData = dataResponse;
                 const questionsContainer = document.getElementById('questions-container');
                 questionsContainer.innerHTML = ''; // Clear any previous questions
-
+                const dynamicQuestionsForm = document.getElementById('dynamic-questions-form');
+                if (dynamicQuestionsForm) {
+                    dynamicQuestionsForm.style.display = 'block';
+                }
                 // Replace placeholders in question texts for vehicle1
                 const vehicle1Make = data.vehicle1.make || '';
                 const vehicle1Model = data.vehicle1.model || '';
@@ -145,8 +148,7 @@
                             const radioButtons = document.querySelectorAll(`input[name="question_${question.id}"]`);
                             radioButtons.forEach(rb => rb.parentElement.classList.remove('selected'));
                             optionWrapper.classList.add('selected');
-                            questionTitle.querySelector('.done-icon').style.display = 'inline-block';
-
+                            questionWrapper.querySelector('.done-icon').style.display = 'inline-block';
                             // Store the answer
                             data.answers1[questionText] = input.value;
 

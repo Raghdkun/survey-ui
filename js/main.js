@@ -80,15 +80,15 @@ function updateNavigation(currentStage) {
     switch (currentStage) {
         case 'vehicles':
             navVehicles.classList.add('active');
-            progressWidth = '14%';
+            progressWidth = '0%';
             break;
         case 'drivers':
             navDrivers.classList.add('active');
-            progressWidth = '28%';
+            progressWidth = '65%';
             break;
         case 'final-details':
             navFinalDetails.classList.add('active');
-            progressWidth = '42%'; // Update width for final stage
+            progressWidth = '100%'; // Update width for final stage
             break;
         default:
             break;

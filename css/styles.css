@@ -21,6 +21,7 @@
 
 /* Done icon styles */
 .done-icon {
+    
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -30,6 +31,13 @@
     text-align: center;
     line-height: 24px;
     margin-right: 10px;
+}
+
+.done-icon::after {
+    content: '✔';
+}
+#stage-final-details .done-icon::after {
+    content: none;
 }
 
 /* Form group layout for alignment */
@@ -371,3 +379,4 @@ select.form-select {
         grid-column: 1 / -1;
     }
 }
+
