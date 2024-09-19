@@ -19,20 +19,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($collectedData));
 
-        // Execute the cURL request
+        // Execute the cURL request and get the response
         $response = curl_exec($ch);
 
         // Check if there was an error
         if (curl_errno($ch)) {
-            echo 'Error: ' . curl_error($ch);
+            // Return the error as a JSON response
+            echo json_encode(['status' => 'error', 'message' => curl_error($ch)]);
         } else {
-            // Handle the response from the external endpoint
-            echo $response;
+            // Return the response from the webhook (ensure it is returned as JSON)
+            echo json_encode(['status' => 'success', 'response' => $response]);
         }
 
         // Close the cURL session
         curl_close($ch);
     } else {
+        // No data was received
         echo json_encode(['status' => 'error', 'message' => 'No data received.']);
     }
 } else {

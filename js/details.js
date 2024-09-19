@@ -130,7 +130,6 @@
                 questionWrapper.querySelector('.done-icon').style.display = 'inline-block';
                 markQuestionAsCompleted(questionWrapper);
                 showNextQuestion(index);
-                moveToNextQuestion();
             }
         });
     }
@@ -258,7 +257,6 @@
                 questionWrapper.querySelector('.done-icon').style.display = 'inline-block';
                 markQuestionAsCompleted(questionWrapper);
                 showNextQuestion(index);
-                moveToNextQuestion();
             });
         });
     }
@@ -310,7 +308,6 @@
                 questionWrapper.querySelector('.done-icon').style.display = 'inline-block';
                 markQuestionAsCompleted(questionWrapper);
                 showNextQuestion(index);
-                moveToNextQuestion();
             }
         });
     }
@@ -382,7 +379,7 @@
         driver: window.data.driver,
         finalDetails: window.data.finalDetails
     };
-    fetch('http://localhost/landing/submit_data.php', {
+    fetch('http://www.surveytest.byethost7.com/submit_data.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
