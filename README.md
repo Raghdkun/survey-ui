@@ -60,4 +60,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ---
 
-Built with ❤️ by Raghdkun Team
+Built with ❤️ by Raghdkun
