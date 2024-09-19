@@ -50,16 +50,10 @@ Welcome to the SmartFinancial Car Insurance Survey UI! This sleek and user-frien
 2. Open `index.php` in a web server environment
 3. Start collecting car insurance information!
 
-*Note: Replace with an actual screenshot of your UI*
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ---
 
-Built with ❤️ by the SmartFinancial Team
+Built with ❤️ by Raghdkun Team
