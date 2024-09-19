@@ -52,7 +52,7 @@ Welcome to the SmartFinancial Car Insurance Survey UI! This sleek and user-frien
 
 ## 📸 Preview
 
-https://github.com/Raghdkun/survey-ui
+https://raghdkun.github.io/survey-ui/
 
 ## 📄 License
 
