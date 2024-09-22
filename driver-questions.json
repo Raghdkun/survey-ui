@@ -1,151 +1,176 @@
 {
-  "questions": [
-    {
-      "id": 1,
-      "key": "gender",
-      "question": "What is your gender?",
-      "type": "radio",
-      "choices": ["Male", "Female", "Non-binary"]
-    },
-    {
-      "id": 2,
-      "key": "is_married",
-      "question": "Are you married?",
-      "type": "radio",
-      "choices": ["Yes", "No"]
-    },
-    {
-      "id": 3,
-      "key": "education_level",
-      "question": "What is your education level?",
-      "type": "radio",
-      "choices": [
-        "Less than high school",
-        "High school diploma",
-        "Some college",
-        "Associate Degree",
-        "Bachelor’s Degree",
-        "Master’s Degree",
-        "Doctorate Degree"
-      ]
-    },
-    {
-      "id": 4,
-      "key": "occupation",
-      "question": "What is your occupation?",
-      "type": "dropdown",
-      "choices": [
-        "Administrative Clerical",
-        "Architect",
-        "Business Owner",
-        "Certified Public Accountant",
-        "Clergy",
-        "Construction Trades",
-        "Consultant",
-        "Dentist",
-        "Disabled",
-        "Engineer",
-        "Financial Services",
-        "Health Care",
-        "Homemaker",
-        "Human Relations",
-        "Lawyer",
-        "Marketing",
-        "Manager Supervisor",
-        "Military Enlisted",
-        "Minor Not Applicable",
-        "Other / Not Listed",
-        "Other Non Technical",
-        "Other Technical",
-        "Physician",
-        "Professional Salaried",
-        "Professor",
-        "Retail",
-        "Retired",
-        "Sales Inside",
-        "Sales Outside",
-        "School Teacher",
-        "Scientist",
-        "Self Employed",
-        "Skilled Semi Skilled",
-        "Transportation / Logistics",
-        "Student",
-        "Unemployed"
-      ]
-    },
-    {
-      "id": 5,
-      "key": "credit_score",
-      "question": "What is your credit score?",
-      "type": "radio",
-      "choices": [
-        "Excellent (800-850)",
-        "Good (680-799)",
-        "Average (600-679)",
-        "Poor (300-599)"
-      ]
-    },
-    {
-      "id": 6,
-      "key": "license_status",
-      "question": "What is the status of your driver’s license?",
-      "type": "radio",
-      "choices": [
-        "Active",
-        "Suspended",
-        "Expired",
-        "Permit",
-        "Foreign"
-      ]
-    },
-    {
-      "id": 7,
-      "key": "requires_sr22",
-      "question": "Do you require SR-22?",
-      "type": "radio",
-      "choices": ["Yes", "No"]
-    },
-    {
-      "id": 8,
-      "key": "incidents_last_3_years",
-      "question": "Any incidents in the last 3 years?",
-      "type": "radio",
-      "choices": ["Yes", "No"]
-    },
-    {
-      "id": 9,
-      "key": "incident_type",
-      "question": "Type of incident",
-      "type": "radio",
-      "choices": ["Ticket", "Accident", "Claim", "DUI", "License Suspension"]
-    },
-    {
-      "id": 10,
-      "key": "date_of_accident",
-      "question": "Date of Accident",
-      "type": "date",
-      "choices": []
-    },
-    {
-      "id": 11,
-      "key": "accident_details",
-      "question": "What happened in the accident?",
-      "type": "dropdown",
-      "choices": [
-        "Collided with another car",
-        "Hit while stopped",
-        "Hit by another person",
-        "Rear-ended by another person",
-        "Single car accident",
-        "Other"
-      ]
-    },
-    {
-      "id": 12,
-      "key": "add_second_driver",
-      "question": "Do you want to add a second driver?",
-      "type": "radio",
-      "choices": ["Yes", "No"]
-    }
-  ]
-}
+    "questions": [
+      {
+        "id": 1,
+        "type": "text",
+        "key": "driver_name",
+        "question": "What is your name?",
+        "fields": [
+          { "name": "first_name", "placeholder": "First Name" },
+          { "name": "last_name", "placeholder": "Last Name" }
+        ]
+      },
+      {
+        "id": 2,
+        "type": "date",
+        "key": "date_of_birth",
+        "question": "What is your date of birth?"
+      },
+      {
+        "id": 3,
+        "type": "radio",
+        "key": "gender",
+        "question": "What is your gender?",
+        "choices": ["Male", "Female", "Non-binary"]
+      },
+      {
+        "id": 4,
+        "type": "radio",
+        "key": "is_married",
+        "question": "Are you married?",
+        "choices": ["Yes", "No"]
+      },
+      {
+        "id": 5,
+        "type": "dropdown",
+        "key": "education_level",
+        "question": "What is your education level?",
+        "choices": [
+          "Less than high school",
+          "High school diploma",
+          "Some college",
+          "Associate Degree",
+          "Bachelor’s Degree",
+          "Master’s Degree",
+          "Doctorate Degree"
+        ]
+      },
+      {
+        "id": 6,
+        "type": "dropdown",
+        "key": "occupation",
+        "question": "What is your occupation?",
+        "choices": [
+          "Administrative Clerical",
+          "Architect",
+          "Business Owner",
+          "Certified Public Accountant",
+          "Clergy",
+          "Construction Trades",
+          "Consultant",
+          "Dentist",
+          "Disabled",
+          "Engineer",
+          "Financial Services",
+          "Health Care",
+          "Homemaker",
+          "Human Relations",
+          "Lawyer",
+          "Marketing",
+          "Manager Supervisor",
+          "Military Enlisted",
+          "Minor Not Applicable",
+          "Other / Not Listed",
+          "Other Non Technical",
+          "Other Technical",
+          "Physician",
+          "Professional Salaried",
+          "Professor",
+          "Retail",
+          "Retired",
+          "Sales Inside",
+          "Sales Outside",
+          "School Teacher",
+          "Scientist",
+          "Self Employed",
+          "Skilled Semi Skilled",
+          "Transportation / Logistics",
+          "Student",
+          "Unemployed"
+        ]
+      },
+      {
+        "id": 7,
+        "type": "dropdown",
+        "key": "credit_score",
+        "question": "What is your credit score?",
+        "choices": [
+          "Excellent (800-850)",
+          "Good (680-799)",
+          "Average (600-679)",
+          "Poor (300-599)"
+        ]
+      },
+      {
+        "id": 8,
+        "type": "dropdown",
+        "key": "license_status",
+        "question": "What is the status of your driver’s license?",
+        "choices": ["Active", "Suspended", "Expired", "Permit", "Foreign"]
+      },
+      {
+        "id": 9,
+        "type": "radio",
+        "key": "require_sr22",
+        "question": "Do you require SR-22?",
+        "choices": ["Yes", "No"]
+      },
+      {
+        "id": 10,
+        "type": "radio",
+        "key": "any_incidents",
+        "question": "Any incidents in the last 3 years?",
+        "choices": ["Yes", "No"],
+        "conditional_questions": [
+          {
+            "id": 11,
+            "type": "dropdown",
+            "key": "incident_type",
+            "question": "Type of incident",
+            "choices": ["Ticket", "Accident", "Claim", "DUI", "License Suspension"]
+          },
+          {
+            "id": 12,
+            "type": "date",
+            "key": "incident_date",
+            "question": "Date of the incident",
+            "validation": {
+              "max_years_ago": 3
+            }
+          },
+          {
+            "id": 13,
+            "type": "dropdown",
+            "key": "incident_details",
+            "question": "Details of the incident",
+            "choices": [
+              "Speeding less than 10 mph over",
+              "Speeding more than 10 mph over",
+              "Speeding more than 20 mph over",
+              "Drug possession",
+              "Minor in possession",
+              "Open Container",
+              "DUI/DWI"
+            ]
+          },
+          {
+            "id": 14,
+            "type": "radio",
+            "key": "more_incidents",
+            "question": "Any other incidents in the last 3 years?",
+            "choices": ["Yes", "No"],
+            "conditional_questions": "repeat_incident_questions"
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "type": "radio",
+        "key": "add_second_driver",
+        "question": "Want to add a second driver?",
+        "choices": ["Yes", "No"],
+        "conditional_questions": "repeat_driver_questions"
+      }
+    ]
+  }
+  

@@ -9,6 +9,18 @@
     const nextStepButtonFinalDetails = document.getElementById('next-step-button-final-details');
     const detailsQuestionsContainer = document.getElementById('details-questions-container');
 
+
+      // Create a Thank You message container (initially hidden)
+      const thankYouMessage = document.createElement('div');
+      thankYouMessage.style.display = 'none';
+      thankYouMessage.style.textAlign = 'center';
+      thankYouMessage.innerHTML = `
+          <h1 style="text-align: center;">&nbsp;</h1>
+<h1 style="text-align: center;"><span style="color: #ff0080;">Thank you for your submission!</span></h1>
+<h3 style="text-align: center;"><strong>We have received your information. You will be redirected shortly.</strong></h3>
+      `;
+      document.body.appendChild(thankYouMessage);
+
     let currentQuestionIndex = 0;
 
     function loadDetailsQuestions() {
@@ -396,6 +408,19 @@
     });
     // Log the collected data to the console
     console.log('All Collected Data:', JSON.stringify(collectedData, null, 2));
+
+      // Hide all final details stage elements
+      stageFinalDetails.style.display = 'none';
+      detailsQuestionsContainer.style.display = 'none';
+      nextStepButtonFinalDetails.style.display = 'none';
+
+      // Show the thank you message
+      thankYouMessage.style.display = 'block';
+
+      // Set a 5-minute timeout to refresh or redirect the page
+      setTimeout(() => {
+          window.location.reload(); // Refresh the page (you can replace this with a redirect)
+      }, 1000); // 300,000 ms = 5 minutes
     });
 
     window.loadDetailsQuestions = loadDetailsQuestions;

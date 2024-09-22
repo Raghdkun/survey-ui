@@ -39,6 +39,9 @@
 #stage-final-details .done-icon::after {
     content: none;
 }
+#stage-drivers .done-icon::after {
+    content: none;
+}
 
 /* Form group layout for alignment */
 .form-group {
@@ -145,6 +148,14 @@
     .radio-button {
         width: 100%;
     }
+}
+
+.question-step {
+    display: none;
+}
+
+.question-step.active {
+    display: block;
 }
 
 /* Next Step Button Styles */
@@ -334,6 +345,15 @@ select.form-select {
 .question-step.completed {
     display: block;
     opacity: 0.8; /* Slightly dimmed to indicate completion */
+}
+/* Hide first instance of done icon if duplicated */
+.question-title .done-icon:first-of-type {
+    display: none;
+}
+
+/* Only show done-icon in completed steps */
+.question-step.completed .done-icon {
+    display: inline-block;
 }
 
 .question-step.active .question-title {

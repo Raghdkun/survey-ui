@@ -7,10 +7,8 @@
     <!-- Include Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Include Font Awesome for icons -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <!-- Link to your custom CSS -->
     <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-SZbPON6uTfKRJ6X4Q1HuvF7vydAEvBNx1XBw0WXhRn3h3Z9nIG3cIrSxfk4V6Kr6MglVNTOZ4ADv0uCU3Zs+Ug==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 <body>
@@ -124,62 +122,18 @@
         <button id="next-step-button-vehicles" class="next-step-button">Next Step</button>
     </div>
 </div>
-
 <!-- Drivers Stage -->
+<!-- Include this within your main HTML file -->
 <div id="stage-drivers" class="stage" style="display: none;">
-    <!-- Name Form -->
-    <div class="bg-white p-10 form-container" id="name-form">
-        <!-- Title and subtitle -->
-        <h2 class="question-title text-2xl font-semibold text-center mb-2">
-            <div class="done-icon" id="name-done-icon" style="display: none;"></div>
-            What is your name?
-        </h2>
-        <p class="text-gray-500 text-center mb-6">The better we know you, the more accurate quotes we can provide</p>
-        <!-- First Name and Last Name Input Fields -->
-        <div>
-            <div class="mb-4">
-                <input type="text" id="first-name" name="first_name" placeholder="First Name" class="name-input w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder-gray-400">
-            </div>
-            <div class="mb-4">
-                <input type="text" id="last-name" name="last_name" placeholder="Last Name" class="name-input w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder-gray-400">
-            </div>
-        </div>
+    <div class="container mx-auto p-4 max-w-screen-lg">
+        <form id="drivers-form" class="bg-white p-10 form-container">
+            <div id="drivers-questions-container" class="question-steps"></div>
+        </form>
     </div>
-    <!-- Date of Birth Form (Initially Hidden) -->
-    <div class="bg-white p-10 form-container" id="dob-form" style="display: none;">
-        <!-- Title -->
-        <h2 class="question-title text-2xl font-semibold text-center mb-4">
-            <div class="done-icon" id="dob-done-icon" style="display: none;"></div>
-            What is your date of birth?
-        </h2>
-
-        <div class="bg-white p-10 form-container">
-            <div class="dob-input-container flex items-center justify-center">
-                <!-- Month Input -->
-                <input type="text" id="dob-month" placeholder="MM" maxlength="2" class="dob-input">
-                <!-- Separator -->
-                <span class="text-lg text-gray-400">/</span>
-                <!-- Day Input -->
-                <input type="text" id="dob-day" placeholder="DD" maxlength="2" class="dob-input">
-                <!-- Separator -->
-                <span class="text-lg text-gray-400">/</span>
-                <!-- Year Input -->
-                <input type="text" id="dob-year" placeholder="YYYY" maxlength="4" class="dob-input">
-            </div>
-        </div>
-        <!-- Date of Birth Input -->
-       
-        <!-- Error Message for DOB -->
-        <div id="dob-error-message" class="error-message" style="display: none;"></div>
-    </div>
-   
-</div>
- <!-- Driver Questions will be inserted here dynamically -->
-    <!-- Next Step Button for Drivers Stage -->
     <div class="next-step-container">
-        <button id="next-step-button-drivers" class="next-step-button" style="display: none;">Next Step</button>
+        <button id="next-step-button-drivers" class="next-step-button">Next Step</button>
     </div>
-
+</div>
  <!-- Final Details Stage -->
  <div id="stage-final-details" class="stage" style="display: none;">
     <div class="container mx-auto p-4 max-w-screen-lg">
